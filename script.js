@@ -50,6 +50,8 @@ const DOM = {
     orbs: null,
     techStack: null,
     stackItems: null,
+    techArch: null,
+    archItems: null,
 
     init() {
         this.navbar = document.querySelector('.navbar');
@@ -64,6 +66,8 @@ const DOM = {
         this.orbs = document.querySelectorAll('.gradient-orb');
         this.techStack = document.querySelector('.tech-stack-3d');
         this.stackItems = document.querySelectorAll('.stack-item');
+        this.techArch = document.querySelector('.tech-arch');
+        this.archItems = document.querySelectorAll('.arch-item');
     }
 };
 
@@ -146,22 +150,32 @@ function initScrollHandler() {
 }
 
 function update3DStack(scrollY) {
-    if (!DOM.techStack) return;
+    if (DOM.techStack) {
+        // Link rotation and position to scroll for smooth 3D motion
+        const rotation = scrollY * 0.15;
+        const translateY = scrollY * 0.3;
+        const rotateX = Math.sin(scrollY * 0.002) * 10;
 
-    // Link rotation and position to scroll for smooth 3D motion
-    const rotation = scrollY * 0.15;
-    const translateY = scrollY * 0.3;
-    const rotateX = Math.sin(scrollY * 0.002) * 10;
+        DOM.techStack.style.transform = `rotateY(${rotation}deg) rotateX(${rotateX}deg) translateY(${translateY}px)`;
 
-    DOM.techStack.style.transform = `rotateY(${rotation}deg) rotateX(${rotateX}deg) translateY(${translateY}px)`;
+        // Animate items individually for depth and staggering
+        DOM.stackItems.forEach((item, index) => {
+            const depth = (index + 1) * 40;
+            const itemRotation = scrollY * (0.1 * (index + 1));
+            const float = Math.cos(scrollY * 0.005 + index) * 5;
+            item.style.transform = `translateZ(${depth}px) rotateY(${itemRotation * 0.5}deg) translateY(${float}px)`;
+        });
+    }
 
-    // Animate items individually for depth and staggering
-    DOM.stackItems.forEach((item, index) => {
-        const depth = (index + 1) * 40;
-        const itemRotation = scrollY * (0.1 * (index + 1));
-        const float = Math.cos(scrollY * 0.005 + index) * 5;
-        item.style.transform = `translateZ(${depth}px) rotateY(${itemRotation * 0.5}deg) translateY(${float}px)`;
-    });
+    if (DOM.techArch) {
+        // Circular Arch Rotation logic
+        const archRotation = scrollY * 0.08;
+        DOM.techArch.style.transform = `translateX(-50%) rotate(${archRotation}deg)`;
+
+        // Counter-rotate items to keep them upright if desired, 
+        // or let them roll with the arch for a more "rolling" effect.
+        // We'll let them roll for the requested effect.
+    }
 }
 
 function updateActiveNavLink(scrollY) {

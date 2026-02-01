@@ -2945,3 +2945,86 @@ body {
 .stack-item i {
     filter: drop-shadow(0 0 10px currentColor);
 }
+
+/* ===================================
+   CIRCULAR TECH ARCH
+   ================================= */
+
+.tech-arch {
+    position: absolute;
+    bottom: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 400px;
+    z-index: 5;
+    pointer-events: none;
+    transition: transform 0.5s var(--transition-glide);
+}
+
+.arch-center {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 100px;
+    background: radial-gradient(ellipse at bottom, var(--primary) 0%, transparent 70%);
+    opacity: 0.3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arch-center i {
+    font-size: 4rem;
+    color: var(--primary);
+    filter: drop-shadow(0 0 20px var(--primary));
+    opacity: 0.5;
+}
+
+.arch-item {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--glass-shadow);
+    transform-origin: 50% -320px; /* Orbit around the center */
+    /* Position each item in the semi-circle */
+    transform: translateX(-50%) rotate(calc(-90deg + (var(--i) * 20deg))) translateY(-320px);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.arch-item i {
+    font-size: 2.2rem;
+    color: var(--text-primary);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+/* Vibrant Icon Specific Glows */
+.arch-item:nth-child(1) { color: #00d4ff; border-color: rgba(0, 212, 255, 0.5); }
+.arch-item:nth-child(2) { color: #00ffa2; border-color: rgba(0, 255, 162, 0.5); }
+.arch-item:nth-child(3) { color: #f7df1e; border-color: rgba(247, 223, 30, 0.5); }
+.arch-item:nth-child(4) { color: #61dafb; border-color: rgba(97, 218, 251, 0.5); }
+.arch-item:nth-child(5) { color: #e34c26; border-color: rgba(227, 76, 38, 0.5); }
+.arch-item:nth-child(6) { color: #264de4; border-color: rgba(38, 77, 228, 0.5); }
+.arch-item:nth-child(7) { color: #ffffff; border-color: rgba(255, 255, 255, 0.5); }
+.arch-item:nth-child(8) { color: #ff00aa; border-color: rgba(255, 0, 170, 0.5); }
+
+@media (max-width: 992px) {
+    .tech-arch {
+        width: 100%;
+        height: auto;
+        bottom: -100px;
+        transform: translateX(-50%) scale(0.6);
+    }
+}
