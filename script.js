@@ -52,6 +52,7 @@ const DOM = {
     stackItems: null,
     techArch: null,
     archItems: null,
+    techOrbit: null,
 
     init() {
         this.navbar = document.querySelector('.navbar');
@@ -68,6 +69,7 @@ const DOM = {
         this.stackItems = document.querySelectorAll('.stack-item');
         this.techArch = document.querySelector('.tech-arch');
         this.archItems = document.querySelectorAll('.arch-item');
+        this.techOrbit = document.querySelector('.tech-orbit');
     }
 };
 
@@ -175,6 +177,12 @@ function update3DStack(scrollY) {
         // Counter-rotate items to keep them upright if desired, 
         // or let them roll with the arch for a more "rolling" effect.
         // We'll let them roll for the requested effect.
+    }
+
+    if (DOM.techOrbit) {
+        // Gentle rotation of the entire orbit on scroll
+        const orbitRotation = scrollY * 0.05;
+        DOM.techOrbit.style.transform = `rotate(${orbitRotation}deg)`;
     }
 }
 

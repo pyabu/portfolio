@@ -3435,3 +3435,272 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 }
+/* ===================================
+   INTERACTIVE TECH ORBIT
+   ================================= */
+
+.tech-orbit {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Central Tech Card */
+.orbit-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 140px;
+    background: linear-gradient(135deg,
+            rgba(112, 0, 255, 0.15) 0%,
+            rgba(0, 212, 255, 0.15) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1.5px solid rgba(112, 0, 255, 0.4);
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow:
+        0 8px 32px rgba(112, 0, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: centerPulse 3s ease-in-out infinite, float 6s ease-in-out infinite;
+    z-index: 10;
+}
+
+.center-icon {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-icon i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    filter: drop-shadow(0 0 15px var(--primary));
+}
+
+.center-label {
+    font-family: var(--font-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Orbital Cards */
+.orbit-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 110px;
+    height: 110px;
+    background: linear-gradient(135deg,
+            rgba(20, 20, 40, 0.8) 0%,
+            rgba(30, 30, 50, 0.8) 100%);
+    backdrop-filter: blur(15px) saturate(150%);
+    -webkit-backdrop-filter: blur(15px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+    /* Orbital positioning */
+    --angle: calc(var(--orbit-index) * 60deg);
+    --orbit-radius: 200px;
+    transform:
+        translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--orbit-radius) * -1)) rotate(calc(var(--angle) * -1));
+
+    animation: float 6s ease-in-out infinite;
+    animation-delay: calc(var(--orbit-index) * 0.2s);
+}
+
+.orbit-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.05) 100%);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.orbit-card:hover {
+    transform:
+        translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--orbit-radius) * -1)) rotate(calc(var(--angle) * -1)) scale(1.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.5),
+        0 0 30px currentColor,
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.orbit-card:hover::before {
+    opacity: 1;
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.card-icon i {
+    font-size: 2rem;
+    color: currentColor;
+    filter: drop-shadow(0 0 10px currentColor);
+    transition: all 0.4s ease;
+}
+
+.orbit-card:hover .card-icon i {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px currentColor);
+}
+
+.card-label {
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Tech-specific colors */
+.orbit-card:nth-child(2) {
+    color: #e34c26;
+}
+
+/* HTML */
+.orbit-card:nth-child(3) {
+    color: #264de4;
+}
+
+/* CSS */
+.orbit-card:nth-child(4) {
+    color: #00d4ff;
+}
+
+/* Flutter */
+.orbit-card:nth-child(5) {
+    color: #00ffa2;
+}
+
+/* Kotlin */
+.orbit-card:nth-child(6) {
+    color: #61dafb;
+}
+
+/* React */
+.orbit-card:nth-child(7) {
+    color: #68a063;
+}
+
+/* Node.js */
+
+/* Decorative Stars */
+.orbit-star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent);
+    left: var(--star-x);
+    top: var(--star-y);
+    animation: starTwinkle 3s ease-in-out infinite;
+    animation-delay: calc(var(--star-x, 0%) * 0.01s);
+}
+
+/* Animations */
+@keyframes centerPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 8px 32px rgba(112, 0, 255, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    50% {
+        box-shadow:
+            0 8px 48px rgba(0, 212, 255, 0.5),
+            0 0 40px rgba(112, 0, 255, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform:
+            translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(calc(var(--orbit-radius, 0px) * -1)) rotate(calc(var(--angle, 0deg) * -1)) translateY(0);
+    }
+
+    50% {
+        transform:
+            translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(calc(var(--orbit-radius, 0px) * -1)) rotate(calc(var(--angle, 0deg) * -1)) translateY(-15px);
+    }
+}
+
+@keyframes starTwinkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
+@media (max-width: 992px) {
+    .tech-orbit {
+        width: 350px;
+        height: 350px;
+        transform: scale(0.8);
+    }
+
+    .orbit-card {
+        --orbit-radius: 140px;
+        width: 90px;
+        height: 90px;
+    }
+
+    .orbit-center {
+        width: 110px;
+        height: 110px;
+    }
+}
