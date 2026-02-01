@@ -2814,3 +2814,134 @@ body {
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
 }
+/* ===================================
+   3D TECH STACK
+   ================================= */
+
+.tech-stack-3d {
+    position: absolute;
+    top: -60px;
+    right: -40px;
+    width: 280px;
+    height: 380px;
+    perspective: 1500px;
+    transform-style: preserve-3d;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.stack-item {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    transform-style: preserve-3d;
+}
+
+.stack-item i {
+    font-size: 3rem;
+    filter: drop-shadow(0 0 15px currentColor);
+}
+
+.stack-item span {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+
+.item-1 { 
+    color: #e34c26; /* HTML */
+    transform: translateZ(150px) translateY(0);
+}
+.item-2 { 
+    color: #264de4; /* CSS */
+    transform: translateZ(50px) translateY(80px) rotateY(15deg);
+}
+.item-3 { 
+    color: #00d4ff; /* Flutter */
+    transform: translateZ(-50px) translateY(160px) rotateY(-15deg);
+}
+.item-4 { 
+    color: #00ffa2; /* Kotlin/Android */
+    transform: translateZ(-150px) translateY(240px) rotateY(10deg);
+}
+
+/* 3D Floating Animation */
+@keyframes float3D {
+    0%, 100% { transform: translateY(0) rotateX(5deg) rotateY(10deg); }
+    50% { transform: translateY(-20px) rotateX(-5deg) rotateY(-10deg); }
+}
+
+.tech-stack-3d {
+    animation: float3D 10s infinite ease-in-out;
+}
+
+/* Glass Refraction Effect on Stack Items */
+.stack-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.stack-item::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, var(--accent) 0%, transparent 70%);
+    opacity: 0.1;
+    transform: translate(-50%, -50%) translateZ(-1px);
+    filter: blur(30px);
+}
+
+@media (max-width: 992px) {
+    .tech-stack-3d {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin: 40px auto;
+        transform: scale(0.8);
+    }
+}
+
+/* Project Image Styling */
+.project-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--transition-glide);
+}
+
+.project-card:hover .project-placeholder img {
+    transform: scale(1.1);
+}
+
+/* Enhancing Stack Item Roundness */
+.stack-item {
+    border-radius: 40px; /* More rounded as requested */
+    overflow: hidden;
+}
+
+/* Vibrant Glow for Stack Icons */
+.stack-item i {
+    filter: drop-shadow(0 0 10px currentColor);
+}

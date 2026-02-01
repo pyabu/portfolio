@@ -48,6 +48,8 @@ const DOM = {
     hero: null,
     codeWindow: null,
     orbs: null,
+    techStack: null,
+    stackItems: null,
 
     init() {
         this.navbar = document.querySelector('.navbar');
@@ -60,6 +62,8 @@ const DOM = {
         this.hero = document.querySelector('.hero');
         this.codeWindow = document.querySelector('.code-window');
         this.orbs = document.querySelectorAll('.gradient-orb');
+        this.techStack = document.querySelector('.tech-stack-3d');
+        this.stackItems = document.querySelectorAll('.stack-item');
     }
 };
 
@@ -96,25 +100,28 @@ function initScrollHandler() {
     let ticking = false;
 
     const handleScroll = () => {
+        const scrollY = window.scrollY;
+        const scrollDelta = scrollY - State.lastScrollY;
+
+        // Update state
+        State.scrollDirection = scrollDelta > 0 ? 'down' : 'up';
+
+        // Navbar scroll effect
+        DOM.navbar?.classList.toggle('scrolled', scrollY > 50);
+
+        // Active nav link
+        updateActiveNavLink(scrollY);
+
         if (!ticking) {
             Utils.raf.call(window, () => {
-                const scrollY = window.scrollY;
-                const scrollDelta = scrollY - State.lastScrollY;
-
-                // Update state
-                State.scrollDirection = scrollDelta > 0 ? 'down' : 'up';
-
-                // Navbar scroll effect
-                DOM.navbar?.classList.toggle('scrolled', scrollY > 50);
-
-                // Active nav link
-                updateActiveNavLink(scrollY);
-
                 // Parallax effects
                 updateParallax(scrollY, scrollDelta);
 
                 // 3D section effects
                 update3DEffects(scrollDelta);
+
+                // 3D tech stack effect
+                update3DStack(scrollY);
 
                 // Text ripple on significant scroll
                 if (Math.abs(scrollDelta) > 30) {
@@ -136,6 +143,25 @@ function initScrollHandler() {
     }, 150);
 
     window.addEventListener('scroll', handleScrollEnd, { passive: true });
+}
+
+function update3DStack(scrollY) {
+    if (!DOM.techStack) return;
+
+    // Link rotation and position to scroll for smooth 3D motion
+    const rotation = scrollY * 0.15;
+    const translateY = scrollY * 0.3;
+    const rotateX = Math.sin(scrollY * 0.002) * 10;
+
+    DOM.techStack.style.transform = `rotateY(${rotation}deg) rotateX(${rotateX}deg) translateY(${translateY}px)`;
+
+    // Animate items individually for depth and staggering
+    DOM.stackItems.forEach((item, index) => {
+        const depth = (index + 1) * 40;
+        const itemRotation = scrollY * (0.1 * (index + 1));
+        const float = Math.cos(scrollY * 0.005 + index) * 5;
+        item.style.transform = `translateZ(${depth}px) rotateY(${itemRotation * 0.5}deg) translateY(${float}px)`;
+    });
 }
 
 function updateActiveNavLink(scrollY) {
@@ -524,7 +550,7 @@ function initMouseEffects() {
 }
 
 /* ===================================
-   TEXT RIPPLE EFFECT
+   TEXT RIPPLE EFFECT;
    ================================= */
 
 // Initialize text splitting
