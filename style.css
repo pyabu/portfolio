@@ -3028,3 +3028,69 @@ body {
         transform: translateX(-50%) scale(0.6);
     }
 }
+
+/* Arch Label Styling */
+.arch-label {
+    position: absolute;
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+/* Position labels based on which side of the arc */
+.arch-item:nth-child(1) .arch-label,
+.arch-item:nth-child(2) .arch-label,
+.arch-item:nth-child(3) .arch-label,
+.arch-item:nth-child(4) .arch-label {
+    /* Left side labels */
+    right: calc(100% + 15px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.arch-item:nth-child(5) .arch-label,
+.arch-item:nth-child(6) .arch-label,
+.arch-item:nth-child(7) .arch-label,
+.arch-item:nth-child(8) .arch-label {
+    /* Right side labels */
+    left: calc(100% + 15px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Update arch-item to be relative for label positioning */
+.arch-item {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--glass-shadow);
+    transform-origin: 50% -320px;
+    transform: translateX(-50%) rotate(calc(-90deg + (var(--i) * 20deg))) translateY(-320px);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Counter-rotate the icon and label container to keep them upright */
+.arch-item i,
+.arch-item .arch-label {
+    transform: rotate(calc(90deg - (var(--i) * 20deg)));
+}
+
+@media (max-width: 992px) {
+    .arch-label {
+        font-size: 0.75rem;
+    }
+}
