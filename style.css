@@ -3704,3 +3704,69 @@ body {
         height: 110px;
     }
 }
+/* ===================================
+   HERO SECTION ALIGNMENT FIX
+   ================================= */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: var(--section-padding);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 600px;
+    z-index: 2;
+}
+
+.hero-visual {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure tech-orbit doesn't overflow */
+.tech-orbit {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+
+/* Code window adjustments */
+.code-window {
+    width: 100%;
+    max-width: 600px;
+}
+
+@media (max-width: 992px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 80px 20px;
+    }
+    
+    .hero-content {
+        max-width: 100%;
+        margin-bottom: 40px;
+    }
+    
+    .hero-visual {
+        width: 100%;
+    }
+    
+    .tech-orbit {
+        width: 350px;
+        height: 350px;
+    }
+}
