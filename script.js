@@ -74,6 +74,13 @@ const DOM = {
         this.techOrbit = document.querySelector('.tech-orbit');
         this.customCursor = document.querySelector('.custom-cursor');
         this.cursorGlow = document.querySelector('.cursor-glow');
+
+        // Cache section details for 3D effects to avoid querySelector in loop
+        this.sectionDetails = Array.from(this.sections).map(section => ({
+            element: section,
+            header: section.querySelector('.section-header'),
+            content: section.querySelector('.about-content, .skills-grid, .timeline, .projects-grid, .contact-content')
+        }));
     }
 };
 
@@ -246,7 +253,8 @@ function update3DStack(scrollY) {
     if (DOM.techOrbit) {
         // Gentle rotation of the entire orbit on scroll
         const orbitRotation = scrollY * 0.05;
-        DOM.techOrbit.style.transform = `rotate(${orbitRotation}deg)`;
+        // Optimization: Use translate3d for hardware acceleration
+        DOM.techOrbit.style.transform = `rotate(${orbitRotation}deg) translate3d(0,0,0)`;
     }
 }
 
@@ -275,26 +283,26 @@ function updateParallax(scrollY, scrollDelta) {
 
 function update3DEffects(scrollDelta) {
     const windowHeight = window.innerHeight;
+    const viewportCenter = windowHeight / 2;
 
-    DOM.sections.forEach(section => {
-        if (!Utils.isInViewport(section)) return;
+    DOM.sectionDetails.forEach(detail => {
+        if (!Utils.isInViewport(detail.element)) return;
 
-        const rect = section.getBoundingClientRect();
+        const rect = detail.element.getBoundingClientRect();
         const sectionCenter = rect.top + rect.height / 2;
-        const viewportCenter = windowHeight / 2;
         const distanceFromCenter = sectionCenter - viewportCenter;
+
+        // Optimization: Only animate if close to center
+        if (Math.abs(distanceFromCenter) > windowHeight) return;
 
         const rotateX = (distanceFromCenter / windowHeight) * 8;
         const translateZ = Math.abs(distanceFromCenter / windowHeight) * -30;
 
-        const header = section.querySelector('.section-header');
-        const content = section.querySelector('.about-content, .skills-grid, .timeline, .projects-grid, .contact-content');
-
-        if (header) {
-            header.style.transform = `perspective(1000px) rotateX(${rotateX * 0.2}deg) translateZ(${translateZ * 0.3}px)`;
+        if (detail.header) {
+            detail.header.style.transform = `perspective(1000px) rotateX(${rotateX * 0.2}deg) translateZ(${translateZ * 0.3}px)`;
         }
-        if (content) {
-            content.style.transform = `perspective(1000px) rotateX(${rotateX * 0.1}deg) translateZ(${translateZ * 0.5}px)`;
+        if (detail.content) {
+            detail.content.style.transform = `perspective(1000px) rotateX(${rotateX * 0.1}deg) translateZ(${translateZ * 0.5}px)`;
         }
     });
 }
@@ -654,6 +662,27 @@ function initMouseEffects() {
         ripple.style.top = `${e.clientY - rect.top}px`;
         target.appendChild(ripple);
         setTimeout(() => ripple.remove(), 600);
+    });
+
+    // 3D Tilt Effect for Project Cards
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -10; // Max 10deg rotation
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        });
     });
 }
 

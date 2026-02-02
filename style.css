@@ -149,6 +149,21 @@ body {
     }
 }
 
+/* New Hover Glow Animation */
+@keyframes hoverGlow {
+    0% {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    100% {
+        box-shadow: 0 0 25px var(--primary), 0 0 50px var(--secondary);
+    }
+}
+
+.hover-glow-effect:hover {
+    animation: hoverGlow 0.3s ease-out forwards;
+}
+
 /* Parallax Zoom Effect */
 @keyframes parallaxZoom {
     0% {
@@ -475,12 +490,20 @@ body {
     display: inline-block;
 }
 
+.project-card {
+    will-change: transform;
+    /* Optimize hover effect */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    /* More playful spring */
+}
+
 .ripple-text .char {
     display: inline-block;
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
         color 0.15s ease,
         text-shadow 0.15s ease;
-    will-change: transform;
+    will-change: transform, color;
+    /* Optimization */
 }
 
 .ripple-text .char.ripple-active {
@@ -3833,12 +3856,24 @@ body {
     display: flex;
     align-items: center;
     padding: var(--section-padding);
+    display: flex;
+    /* Verify flex alignment */
+    align-items: center;
+    justify-content: center;
+    /* Center content block horizontally */
     position: relative;
+    padding: 0 5%;
+    gap: 50px;
+    /* Consistent gap between text and visual */
     overflow: hidden;
 }
 
 .hero-content {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    /* Ensure left alignment for text */
     max-width: 600px;
     z-index: 2;
 }
