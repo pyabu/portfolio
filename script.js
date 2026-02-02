@@ -53,6 +53,8 @@ const DOM = {
     techArch: null,
     archItems: null,
     techOrbit: null,
+    customCursor: null,
+    cursorGlow: null,
 
     init() {
         this.navbar = document.querySelector('.navbar');
@@ -70,6 +72,8 @@ const DOM = {
         this.techArch = document.querySelector('.tech-arch');
         this.archItems = document.querySelectorAll('.arch-item');
         this.techOrbit = document.querySelector('.tech-orbit');
+        this.customCursor = document.querySelector('.custom-cursor');
+        this.cursorGlow = document.querySelector('.cursor-glow');
     }
 };
 
@@ -78,7 +82,12 @@ const State = {
     lastScrollY: 0,
     scrollDirection: 'down',
     isScrolling: false,
-    animationFrame: null
+    animationFrame: null,
+    mouseX: 0,
+    mouseY: 0,
+    cursorX: 0,
+    cursorY: 0,
+    lenis: null
 };
 
 // Single DOMContentLoaded handler
@@ -88,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initAll() {
+    initLenis();
     initNavigation();
     initTypingEffect();
     initIntersectionObservers();
@@ -96,6 +106,60 @@ function initAll() {
     initParticles();
     initMouseEffects();
     initScrollProgress();
+    requestAnimationFrame(updateAll);
+}
+
+function initLenis() {
+    State.lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
+    });
+
+    function raf(time) {
+        State.lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+}
+
+// Global update loop for lerp effects
+function updateAll() {
+    // Cursor Lerp
+    const lerp = 0.15;
+    State.cursorX += (State.mouseX - State.cursorX) * lerp;
+    State.cursorY += (State.mouseY - State.cursorY) * lerp;
+
+    if (DOM.customCursor) {
+        DOM.customCursor.style.left = `${State.cursorX}px`;
+        DOM.customCursor.style.top = `${State.cursorY}px`;
+    }
+
+    if (DOM.cursorGlow) {
+        DOM.cursorGlow.style.left = `${State.cursorX}px`;
+        DOM.cursorGlow.style.top = `${State.cursorY}px`;
+    }
+
+    // Tech Orbit Mouse Parallax
+    if (DOM.techOrbit) {
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const moveX = (State.mouseX - centerX) / 50;
+        const moveY = (State.mouseY - centerY) / 50;
+
+        // Combine scroll rotation with mouse parallax
+        const scrollRotation = window.scrollY * 0.05;
+        DOM.techOrbit.style.transform = `rotate(${scrollRotation}deg) translate(${moveX}px, ${moveY}px) rotateX(${-moveY}deg) rotateY(${moveX}deg)`;
+    }
+
+    requestAnimationFrame(updateAll);
 }
 
 /* ===================================
@@ -528,6 +592,28 @@ function initParticles() {
    ================================= */
 
 function initMouseEffects() {
+    window.addEventListener('mousemove', (e) => {
+        State.mouseX = e.clientX;
+        State.mouseY = e.clientY;
+    });
+
+    // Custom cursor scaling on hover
+    document.addEventListener('mouseover', (e) => {
+        const target = e.target.closest('a, button, .project-card, .skill-category, .filter-btn');
+        if (target && DOM.customCursor) {
+            DOM.customCursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
+            DOM.customCursor.style.background = 'white';
+        }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+        const target = e.target.closest('a, button, .project-card, .skill-category, .filter-btn');
+        if (target && DOM.customCursor) {
+            DOM.customCursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            DOM.customCursor.style.background = 'var(--primary)';
+        }
+    });
+
     // Hero parallax
     if (DOM.hero && DOM.codeWindow) {
         DOM.hero.addEventListener('mousemove', Utils.throttle((e) => {
