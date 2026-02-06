@@ -3,27 +3,27 @@
    ================================= */
 
 :root {
-    /* Vibrant Cyberpunk Theme */
-    --primary: #7000ff;
-    --primary-light: #9d33ff;
-    --secondary: #00d4ff;
-    --accent: #ff00aa;
-    --accent-secondary: #00ffa2;
-    --bg-primary: #02001a;
-    --bg-secondary: #050125;
-    --bg-tertiary: #080230;
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.85);
-    --text-muted: rgba(255, 255, 255, 0.6);
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --glass-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
-    --glass-hover: rgba(112, 0, 255, 0.15);
-    --glass-shimmer: linear-gradient(120deg, rgba(200, 0, 255, 0) 30%, rgba(200, 0, 255, 0.15) 50%, rgba(200, 0, 255, 0) 70%);
-    --glass-reflection: linear-gradient(135deg, rgba(112, 0, 255, 0.2) 0%, rgba(0, 212, 255, 0) 100%);
-    --gradient-primary: linear-gradient(135deg, #7000ff 0%, #00d4ff 100%);
-    --gradient-secondary: linear-gradient(135deg, #ff00aa 0%, #7000ff 100%);
-    --gradient-accent: linear-gradient(135deg, #00ffa2 0%, #00d4ff 100%);
+    /* Modern Aurora Theme */
+    --primary: #6ae4ff;
+    --primary-light: #9af1ff;
+    --secondary: #8b7bff;
+    --accent: #ff7ad9;
+    --accent-secondary: #7dffd9;
+    --bg-primary: #060814;
+    --bg-secondary: #0b1024;
+    --bg-tertiary: #111833;
+    --text-primary: #f7f8ff;
+    --text-secondary: rgba(247, 248, 255, 0.88);
+    --text-muted: rgba(247, 248, 255, 0.62);
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-shadow: 0 18px 55px rgba(0, 0, 0, 0.55);
+    --glass-hover: rgba(106, 228, 255, 0.16);
+    --glass-shimmer: linear-gradient(120deg, rgba(90, 214, 255, 0) 30%, rgba(90, 214, 255, 0.16) 50%, rgba(90, 214, 255, 0) 70%);
+    --glass-reflection: linear-gradient(135deg, rgba(106, 228, 255, 0.22) 0%, rgba(139, 123, 255, 0) 100%);
+    --gradient-primary: linear-gradient(135deg, #6ae4ff 0%, #8b7bff 100%);
+    --gradient-secondary: linear-gradient(135deg, #ff7ad9 0%, #8b7bff 100%);
+    --gradient-accent: linear-gradient(135deg, #7dffd9 0%, #6ae4ff 100%);
     --font-primary: 'Outfit', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --section-padding: 100px 0;
@@ -3973,5 +3973,545 @@ body {
 @media (max-width: 768px) {
     .hero {
         padding: 80px 20px !important;
+    }
+}
+
+/* ===================================
+   ENHANCED GLASSMORPHISM EFFECTS
+   Modern Frosted Glass Design
+   ================================= */
+
+/* ===================================
+   1. GLASS BASE STYLES
+   ================================= */
+:root {
+    /* Enhanced Glass Variables */
+    --glass-bg-light: rgba(255, 255, 255, 0.08);
+    --glass-bg-medium: rgba(255, 255, 255, 0.12);
+    --glass-bg-strong: rgba(255, 255, 255, 0.16);
+    --glass-border-subtle: rgba(255, 255, 255, 0.12);
+    --glass-border-strong: rgba(255, 255, 255, 0.25);
+    --glass-shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.35);
+    --glass-shadow-medium: 0 12px 48px rgba(0, 0, 0, 0.45);
+    --glass-shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.6);
+    --glass-blur-light: blur(12px);
+    --glass-blur-medium: blur(20px);
+    --glass-blur-strong: blur(30px);
+    --glass-shimmer-speed: 3s;
+}
+
+/* Universal Glass Effect Class */
+.glass-effect {
+    background: var(--glass-bg-light);
+    backdrop-filter: var(--glass-blur-medium) saturate(180%);
+    -webkit-backdrop-filter: var(--glass-blur-medium) saturate(180%);
+    border: 1px solid var(--glass-border-subtle);
+    box-shadow: var(--glass-shadow-soft);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    animation: shimmer var(--glass-shimmer-speed) infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}
+
+/* ===================================
+   2. NAVIGATION GLASS
+   ================================= */
+.navbar {
+    background: rgba(6, 8, 20, 0.85);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.navbar.scrolled {
+    background: rgba(6, 8, 20, 0.95);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6),
+        inset 0 -1px 0 rgba(106, 228, 255, 0.2);
+}
+
+/* ===================================
+   3. CARD GLASS EFFECTS
+   ================================= */
+.skill-category,
+.project-card,
+.timeline-content,
+.contact-card,
+.glass-card {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.37),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Hover Glass Effect */
+.skill-category:hover,
+.project-card:hover,
+.glass-card:hover {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.08) 100%);
+    border-color: rgba(106, 228, 255, 0.4);
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(106, 228, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transform: translateY(-8px) scale(1.02);
+}
+
+/* Shimmer Overlay on Cards */
+.skill-category::after,
+.project-card::after,
+.glass-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 70%);
+    transform: rotate(45deg);
+    animation: cardShimmer 8s infinite;
+    pointer-events: none;
+}
+
+@keyframes cardShimmer {
+
+    0%,
+    100% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+
+    50% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+/* ===================================
+   4. BUTTON GLASS EFFECTS
+   ================================= */
+.btn {
+    background: linear-gradient(135deg,
+            rgba(106, 228, 255, 0.2) 0%,
+            rgba(139, 123, 255, 0.15) 100%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(106, 228, 255, 0.3);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            transparent 100%);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg,
+            rgba(106, 228, 255, 0.3) 0%,
+            rgba(139, 123, 255, 0.25) 100%);
+    border-color: rgba(106, 228, 255, 0.5);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(106, 228, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg,
+            rgba(106, 228, 255, 0.25) 0%,
+            rgba(139, 123, 255, 0.2) 100%);
+    border: 1px solid rgba(106, 228, 255, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg,
+            rgba(255, 122, 217, 0.2) 0%,
+            rgba(139, 123, 255, 0.15) 100%);
+    border: 1px solid rgba(255, 122, 217, 0.3);
+}
+
+/* ===================================
+   5. CODE WINDOW GLASS
+   ================================= */
+.code-window {
+    background: linear-gradient(145deg,
+            rgba(11, 16, 36, 0.9) 0%,
+            rgba(6, 8, 20, 0.95) 100%);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 100px rgba(106, 228, 255, 0.1);
+}
+
+.window-header {
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===================================
+   6. HERO BADGE GLASS
+   ================================= */
+.hero-badge {
+    background: linear-gradient(135deg,
+            rgba(106, 228, 255, 0.15) 0%,
+            rgba(139, 123, 255, 0.1) 100%);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border: 1px solid rgba(106, 228, 255, 0.3);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 0 30px rgba(106, 228, 255, 0.2);
+}
+
+/* ===================================
+   7. STAT CARDS GLASS
+   ================================= */
+.stat {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.04) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    transition: all 0.3s ease;
+}
+
+.stat:hover {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0.06) 100%);
+    border-color: rgba(106, 228, 255, 0.4);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(106, 228, 255, 0.15);
+    transform: translateY(-4px);
+}
+
+/* ===================================
+   8. FORM INPUT GLASS
+   ================================= */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(106, 228, 255, 0.5);
+    box-shadow:
+        inset 0 2px 8px rgba(0, 0, 0, 0.2),
+        0 0 0 3px rgba(106, 228, 255, 0.15),
+        0 0 20px rgba(106, 228, 255, 0.2);
+}
+
+/* ===================================
+   9. FLOATING CARD GLASS
+   ================================= */
+.floating-card {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0.06) 100%);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ===================================
+   10. TECH ORBIT CARDS GLASS
+   ================================= */
+.orbit-card {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.orbit-card:hover {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.08) 100%);
+    border-color: currentColor;
+    box-shadow:
+        0 12px 48px rgba(0, 0, 0, 0.5),
+        0 0 40px currentColor,
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.orbit-center {
+    background: linear-gradient(135deg,
+            rgba(106, 228, 255, 0.15) 0%,
+            rgba(139, 123, 255, 0.1) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 2px solid rgba(106, 228, 255, 0.3);
+    box-shadow:
+        0 12px 48px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(106, 228, 255, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ===================================
+   11. SECTION HEADER GLASS
+   ================================= */
+.section-tag {
+    background: linear-gradient(135deg,
+            rgba(106, 228, 255, 0.12) 0%,
+            rgba(139, 123, 255, 0.08) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(106, 228, 255, 0.25);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(106, 228, 255, 0.15);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ===================================
+   12. CONTACT INFO GLASS
+   ================================= */
+.contact-info-item {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.04) 100%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.contact-info-item:hover {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0.06) 100%);
+    border-color: rgba(106, 228, 255, 0.3);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(106, 228, 255, 0.15);
+}
+
+/* ===================================
+   13. ENHANCED GLOW EFFECTS
+   ================================= */
+.glow-effect {
+    position: relative;
+}
+
+.glow-effect::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg,
+            var(--primary),
+            var(--secondary),
+            var(--accent));
+    border-radius: inherit;
+    opacity: 0;
+    filter: blur(20px);
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.glow-effect:hover::before {
+    opacity: 0.6;
+}
+
+/* ===================================
+   14. GLASS REFLECTION EFFECT
+   ================================= */
+.glass-reflection {
+    position: relative;
+}
+
+.glass-reflection::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 100%);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+/* ===================================
+   END OF GLASS EFFECTS
+   ================================= */
+
+/* ===================================
+   PREMIUM RESUME BUTTON
+   ================================= */
+.btn-resume {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 36px;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--primary);
+    background: rgba(6, 8, 20, 0.8);
+    border: 1px solid rgba(106, 228, 255, 0.2);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 0 20px rgba(106, 228, 255, 0.05);
+    z-index: 1;
+}
+
+.btn-resume::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,
+            rgba(106, 228, 255, 0.1),
+            rgba(139, 123, 255, 0.1));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.btn-resume::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    filter: blur(10px);
+}
+
+.btn-resume:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(106, 228, 255, 0.5);
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(106, 228, 255, 0.2),
+        0 0 50px rgba(139, 123, 255, 0.2);
+}
+
+.btn-resume:hover::before {
+    opacity: 1;
+}
+
+.btn-resume:hover::after {
+    opacity: 0.6;
+}
+
+.btn-resume i {
+    font-size: 1.1em;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-resume:hover i {
+    transform: translateY(2px) scale(1.2);
+    animation: downloadBounce 1s infinite;
+}
+
+@keyframes downloadBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(3px);
     }
 }
