@@ -2152,6 +2152,31 @@ body {
     background: linear-gradient(135deg, rgba(255, 170, 0, 0.1), rgba(255, 0, 170, 0.1));
 }
 
+.project-placeholder.resume-builder {
+    background: linear-gradient(135deg, rgba(106, 228, 255, 0.15), rgba(139, 123, 255, 0.15));
+}
+
+.project-placeholder.resume-builder i {
+    font-size: 5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: resumeIconFloat 3s ease-in-out infinite;
+}
+
+@keyframes resumeIconFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-10px) scale(1.05);
+    }
+}
+
 .project-overlay {
     position: absolute;
     inset: 0;
