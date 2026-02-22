@@ -26,7 +26,7 @@
     --gradient-accent: linear-gradient(135deg, #7dffd9 0%, #6ae4ff 100%);
     --font-primary: 'Outfit', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
-    --section-padding: 100px 0;
+    --section-padding: 70px 0;
     --transition-glide: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -452,7 +452,7 @@ body {
 
 .section-header {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 .section-tag {
@@ -689,19 +689,21 @@ body {
 .nav-toggle {
     display: none;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
     padding: 10px;
+    z-index: 1001;
 }
 
 .nav-toggle .bar {
-    width: 25px;
+    width: 26px;
     height: 3px;
     background: var(--gradient-primary);
     border-radius: 3px;
     transition: all var(--transition-smooth);
+    display: block;
 }
 
 .nav-toggle.active .bar:nth-child(1) {
@@ -727,7 +729,7 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 100px 20px;
+    padding: 80px 20px;
     position: relative;
     overflow: hidden;
     gap: 40px;
@@ -2145,7 +2147,7 @@ body {
 
 @media (max-width: 768px) {
     :root {
-        --section-padding: 70px 0;
+        --section-padding: 50px 0;
     }
 
     .nav-menu {
@@ -4226,6 +4228,157 @@ body.light-theme .preloader {
     background: var(--bg-primary);
 }
 
+/* Light theme - Cards & Glass */
+body.light-theme .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+body.light-theme .glass-card:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    border-color: rgba(106, 228, 255, 0.3);
+}
+
+/* Light theme - Section tags */
+body.light-theme .section-tag {
+    background: linear-gradient(135deg, rgba(106, 228, 255, 0.15), rgba(139, 123, 255, 0.15));
+    border-color: rgba(106, 228, 255, 0.4);
+}
+
+/* Light theme - Buttons */
+body.light-theme .btn-secondary {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: var(--text-primary);
+}
+
+body.light-theme .btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Light theme - Nav links */
+body.light-theme .nav-link {
+    color: rgba(26, 32, 44, 0.7);
+}
+
+body.light-theme .nav-link:hover,
+body.light-theme .nav-link.active {
+    color: #1a202c;
+}
+
+body.light-theme .nav-link.active {
+    background: var(--gradient-primary);
+    color: #fff;
+}
+
+/* Light theme - Nav toggle bars */
+body.light-theme .nav-toggle .bar {
+    background: linear-gradient(135deg, #6ae4ff, #8b7bff);
+}
+
+/* Light theme - Mobile menu */
+body.light-theme .nav-menu {
+    background: rgba(240, 244, 248, 0.95);
+}
+
+@media (max-width: 768px) {
+    body.light-theme .nav-menu {
+        background: rgba(240, 244, 248, 0.98);
+        box-shadow: -10px 0 50px rgba(0, 0, 0, 0.15);
+        border-left-color: rgba(0, 0, 0, 0.08);
+    }
+}
+
+/* Light theme - Theme toggle button */
+body.light-theme .theme-toggle {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #8b7bff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .theme-toggle:hover {
+    background: var(--gradient-primary);
+    color: #fff;
+}
+
+/* Light theme - Back to top */
+body.light-theme .back-to-top {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Light theme - Footer */
+body.light-theme .footer {
+    background: #e2e8f0;
+    border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Light theme - Form inputs */
+body.light-theme .form-group input,
+body.light-theme .form-group textarea {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #1a202c;
+}
+
+body.light-theme .form-group input:focus,
+body.light-theme .form-group textarea:focus {
+    border-color: #6ae4ff;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Light theme - Service, skill, project cards */
+body.light-theme .service-card,
+body.light-theme .skill-card,
+body.light-theme .project-card,
+body.light-theme .education-card,
+body.light-theme .testimonial-card,
+body.light-theme .achievement-card,
+body.light-theme .contact-info,
+body.light-theme .experience-item {
+    background: rgba(255, 255, 255, 0.75);
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Light theme - CTA banner */
+body.light-theme .cta-banner .glass-card {
+    background: linear-gradient(135deg, rgba(106, 228, 255, 0.12), rgba(139, 123, 255, 0.12));
+}
+
+/* Light theme - Tech marquee */
+body.light-theme .tech-marquee-section {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+body.light-theme .marquee-item {
+    color: rgba(26, 32, 44, 0.7);
+}
+
+/* Light theme - Stat & fun fact cards */
+body.light-theme .stat-item,
+body.light-theme .funfact-card {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Light theme - Timeline */
+body.light-theme .timeline::before {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Light theme - Scrollbar */
+body.light-theme::-webkit-scrollbar-track {
+    background: #e2e8f0;
+}
+
+body.light-theme::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #6ae4ff, #8b7bff);
+}
+
 /* ===================================
    BACK TO TOP BUTTON
    ================================= */
@@ -4760,7 +4913,7 @@ body.light-theme .preloader {
    ENHANCED FOOTER
    ================================= */
 .footer {
-    padding: 80px 0 30px;
+    padding: 60px 0 25px;
     border-top: 1px solid rgba(106, 228, 255, 0.2);
     background: linear-gradient(180deg, transparent, rgba(6, 8, 20, 0.9));
 }
@@ -5263,7 +5416,7 @@ body.light-theme .preloader {
    TECH MARQUEE - INFINITE SCROLL
    ================================= */
 .tech-marquee-section {
-    padding: 40px 0;
+    padding: 25px 0;
     overflow: hidden;
     position: relative;
     border-top: 1px solid rgba(106, 228, 255, 0.1);
@@ -5444,15 +5597,15 @@ body.light-theme .preloader {
    CTA BANNER
    ================================= */
 .cta-banner {
-    padding: 80px 0;
+    padding: 50px 0;
 }
 
 .cta-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 40px;
-    padding: 60px 50px;
+    gap: 30px;
+    padding: 45px 40px;
     border-radius: var(--radius-xl);
     background: linear-gradient(135deg, rgba(106, 228, 255, 0.08), rgba(139, 123, 255, 0.08)) !important;
     border: 1px solid rgba(106, 228, 255, 0.2) !important;
