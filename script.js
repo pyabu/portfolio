@@ -100,6 +100,8 @@ const State = {
 // Single DOMContentLoaded handler
 document.addEventListener('DOMContentLoaded', () => {
     DOM.init();
+    // Mark body so CSS knows JS is active (progressive enhancement)
+    document.body.classList.add('js-loaded');
     initAll();
 });
 
@@ -113,33 +115,42 @@ function initAll() {
     initParticles();
     initMouseEffects();
     initScrollProgress();
-    requestAnimationFrame(updateAll);
 }
 
 function initLenis() {
-    State.lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: 'vertical',
-        gestureOrientation: 'vertical',
-        smoothWheel: true,
-        wheelMultiplier: 1,
-        smoothTouch: false,
-        touchMultiplier: 2,
-        infinite: false,
-    });
+    try {
+        if (typeof Lenis === 'undefined') {
+            console.warn('Lenis not loaded, using native scroll');
+            return;
+        }
+        State.lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            gestureOrientation: 'vertical',
+            smoothWheel: true,
+            wheelMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
 
-    function raf(time) {
-        State.lenis.raf(time);
+        function raf(time) {
+            State.lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
         requestAnimationFrame(raf);
+    } catch (e) {
+        console.warn('Lenis initialization failed, using native scroll:', e.message);
     }
-
-    requestAnimationFrame(raf);
 }
 
-// Global update loop for lerp effects
+// Global update loop — only runs when cursor moves (desktop only)
+let cursorActive = false;
 function updateAll() {
-    // Cursor Lerp
+    if (!cursorActive) return;
+
     const lerp = 0.15;
     State.cursorX += (State.mouseX - State.cursorX) * lerp;
     State.cursorY += (State.mouseY - State.cursorY) * lerp;
@@ -148,24 +159,18 @@ function updateAll() {
         DOM.customCursor.style.left = `${State.cursorX}px`;
         DOM.customCursor.style.top = `${State.cursorY}px`;
     }
-
     if (DOM.cursorGlow) {
         DOM.cursorGlow.style.left = `${State.cursorX}px`;
         DOM.cursorGlow.style.top = `${State.cursorY}px`;
     }
 
-    // Tech Orbit Mouse Parallax
-    if (DOM.techOrbit) {
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        const moveX = (State.mouseX - centerX) / 50;
-        const moveY = (State.mouseY - centerY) / 50;
-
-        // Combine scroll rotation with mouse parallax
-        const scrollRotation = window.scrollY * 0.05;
-        DOM.techOrbit.style.transform = `rotate(${scrollRotation}deg) translate(${moveX}px, ${moveY}px) rotateX(${-moveY}deg) rotateY(${moveX}deg)`;
+    // Stop loop when cursor is close enough
+    const dx = State.mouseX - State.cursorX;
+    const dy = State.mouseY - State.cursorY;
+    if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
+        cursorActive = false;
+        return;
     }
-
     requestAnimationFrame(updateAll);
 }
 
@@ -174,89 +179,22 @@ function updateAll() {
    ================================= */
 
 function initScrollHandler() {
-    let ticking = false;
-
     const handleScroll = () => {
         const scrollY = window.scrollY;
-        const scrollDelta = scrollY - State.lastScrollY;
-
-        // Update state
-        State.scrollDirection = scrollDelta > 0 ? 'down' : 'up';
 
         // Navbar scroll effect
         DOM.navbar?.classList.toggle('scrolled', scrollY > 50);
 
-        // Active nav link
+        // Active nav link (throttled naturally by scroll event)
         updateActiveNavLink(scrollY);
 
-        if (!ticking) {
-            Utils.raf.call(window, () => {
-                // Parallax effects
-                updateParallax(scrollY, scrollDelta);
-
-                // 3D section effects
-                update3DEffects(scrollDelta);
-
-                // 3D tech stack effect
-                update3DStack(scrollY);
-
-                // Text ripple on significant scroll
-                if (Math.abs(scrollDelta) > 30) {
-                    triggerTextRipple();
-                }
-
-                State.lastScrollY = scrollY;
-                ticking = false;
-            });
-            ticking = true;
-        }
+        State.lastScrollY = scrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // Debounced scroll end handler
-    const handleScrollEnd = Utils.debounce(() => {
-        resetScrollEffects();
-    }, 150);
-
-    window.addEventListener('scroll', handleScrollEnd, { passive: true });
 }
 
-function update3DStack(scrollY) {
-    if (DOM.techStack) {
-        // Link rotation and position to scroll for smooth 3D motion
-        const rotation = scrollY * 0.15;
-        const translateY = scrollY * 0.3;
-        const rotateX = Math.sin(scrollY * 0.002) * 10;
-
-        DOM.techStack.style.transform = `rotateY(${rotation}deg) rotateX(${rotateX}deg) translateY(${translateY}px)`;
-
-        // Animate items individually for depth and staggering
-        DOM.stackItems.forEach((item, index) => {
-            const depth = (index + 1) * 40;
-            const itemRotation = scrollY * (0.1 * (index + 1));
-            const float = Math.cos(scrollY * 0.005 + index) * 5;
-            item.style.transform = `translateZ(${depth}px) rotateY(${itemRotation * 0.5}deg) translateY(${float}px)`;
-        });
-    }
-
-    if (DOM.techArch) {
-        // Circular Arch Rotation logic
-        const archRotation = scrollY * 0.08;
-        DOM.techArch.style.transform = `translateX(-50%) rotate(${archRotation}deg)`;
-
-        // Counter-rotate items to keep them upright if desired, 
-        // or let them roll with the arch for a more "rolling" effect.
-        // We'll let them roll for the requested effect.
-    }
-
-    if (DOM.techOrbit) {
-        // Gentle rotation of the entire orbit on scroll
-        const orbitRotation = scrollY * 0.05;
-        // Optimization: Use translate3d for hardware acceleration
-        DOM.techOrbit.style.transform = `rotate(${orbitRotation}deg) translate3d(0,0,0)`;
-    }
-}
+// Removed heavy per-scroll 3D stack transforms — now CSS-animated only
 
 function updateActiveNavLink(scrollY) {
     const sections = document.querySelectorAll('section[id]');
@@ -274,90 +212,36 @@ function updateActiveNavLink(scrollY) {
     });
 }
 
-function updateParallax(scrollY, scrollDelta) {
-    DOM.orbs.forEach((orb, index) => {
-        const speed = (index + 1) * 0.05;
-        orb.style.transform = `translateY(${scrollY * speed}px)`;
-    });
-}
-
-function update3DEffects(scrollDelta) {
-    const windowHeight = window.innerHeight;
-    const viewportCenter = windowHeight / 2;
-
-    DOM.sectionDetails.forEach(detail => {
-        if (!Utils.isInViewport(detail.element)) return;
-
-        const rect = detail.element.getBoundingClientRect();
-        const sectionCenter = rect.top + rect.height / 2;
-        const distanceFromCenter = sectionCenter - viewportCenter;
-
-        // Optimization: Only animate if close to center
-        if (Math.abs(distanceFromCenter) > windowHeight) return;
-
-        const rotateX = (distanceFromCenter / windowHeight) * 8;
-        const translateZ = Math.abs(distanceFromCenter / windowHeight) * -30;
-
-        if (detail.header) {
-            detail.header.style.transform = `perspective(1000px) rotateX(${rotateX * 0.2}deg) translateZ(${translateZ * 0.3}px)`;
-        }
-        if (detail.content) {
-            detail.content.style.transform = `perspective(1000px) rotateX(${rotateX * 0.1}deg) translateZ(${translateZ * 0.5}px)`;
-        }
-    });
-}
-
-function resetScrollEffects() {
-    document.querySelectorAll('.liquid-text').forEach(el => {
-        el.style.filter = '';
-        el.style.transform = '';
-    });
-
-    document.querySelectorAll('.liquid-glass').forEach(el => {
-        el.style.backdropFilter = '';
-        el.style.transform = '';
-    });
-}
+// Removed updateParallax, update3DEffects, resetScrollEffects — too expensive per-scroll
 
 /* ===================================
    INTERSECTION OBSERVERS (CONSOLIDATED)
    ================================= */
 
 function initIntersectionObservers() {
-    // Impressive scroll animation effects
-    const scrollEffects = ['scroll-cinematic', 'scroll-parallax-zoom', 'scroll-staggered', 'scroll-elastic', 'scroll-glow'];
-    let effectIndex = 0;
-
-    // Main animation observer with impressive effects
+    // Simple, fast reveal animation — no heavy filter/3D classes
     const animObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Apply varied impressive effects
-                const effect = scrollEffects[effectIndex % scrollEffects.length];
-                entry.target.classList.add('visible', 'animate', effect);
-                effectIndex++;
+                entry.target.classList.add('visible', 'animate');
 
-                // Staggered animation for children with impressive effects
+                // Fast staggered reveal for children
                 const items = entry.target.querySelectorAll('.skill-item, .timeline-content, .project-card, .highlight, .contact-card');
                 items.forEach((item, i) => {
-                    const childEffect = scrollEffects[(effectIndex + i) % scrollEffects.length];
                     setTimeout(() => {
-                        item.classList.add('animate', childEffect);
-                    }, i * 150);
+                        item.classList.add('animate');
+                    }, i * 80);
                 });
             }
         });
-    }, { rootMargin: '-80px', threshold: 0.15 });
+    }, { rootMargin: '-50px', threshold: 0.1 });
 
     // Observe sections
     DOM.sections.forEach(section => animObserver.observe(section));
 
-    // Observe cards and content with varied effects
+    // Observe cards
     document.querySelectorAll('.glass-card, .skill-category, .project-card, .timeline-content')
-        .forEach((el, i) => {
-            el.style.animationDelay = `${i * 0.1}s`;
-            animObserver.observe(el);
-        });
+        .forEach(el => animObserver.observe(el));
 
     // Counter observer
     const counterObserver = new IntersectionObserver((entries) => {
@@ -371,18 +255,6 @@ function initIntersectionObservers() {
     }, { threshold: 0.5 });
 
     document.querySelectorAll('.stat-number').forEach(el => counterObserver.observe(el));
-
-    // Footer ripple observer
-    const footerObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                triggerCharRipple(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('.footer-brand .logo-text, .footer-bottom p')
-        .forEach(el => footerObserver.observe(el));
 }
 
 /* ===================================
@@ -393,6 +265,24 @@ function initNavigation() {
     DOM.navToggle?.addEventListener('click', () => {
         DOM.navToggle.classList.toggle('active');
         DOM.navMenu?.classList.toggle('active');
+    });
+
+    // Close mobile nav when clicking outside
+    document.addEventListener('click', (e) => {
+        if (DOM.navMenu?.classList.contains('active') && 
+            !e.target.closest('.nav-menu') && 
+            !e.target.closest('.nav-toggle')) {
+            DOM.navToggle?.classList.remove('active');
+            DOM.navMenu?.classList.remove('active');
+        }
+    });
+
+    // Close nav on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && DOM.navMenu?.classList.contains('active')) {
+            DOM.navToggle?.classList.remove('active');
+            DOM.navMenu?.classList.remove('active');
+        }
     });
 
     DOM.navLinks.forEach(link => {
@@ -600,9 +490,17 @@ function initParticles() {
    ================================= */
 
 function initMouseEffects() {
+    // Skip heavy mouse effects on touch devices
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouchDevice) return;
+
     window.addEventListener('mousemove', (e) => {
         State.mouseX = e.clientX;
         State.mouseY = e.clientY;
+        if (!cursorActive) {
+            cursorActive = true;
+            requestAnimationFrame(updateAll);
+        }
     });
 
     // Custom cursor scaling on hover
@@ -690,40 +588,7 @@ function initMouseEffects() {
    TEXT RIPPLE EFFECT;
    ================================= */
 
-// Initialize text splitting
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.section-title, .footer-brand .logo-text, .footer-bottom p').forEach(el => {
-        if (el.classList.contains('logo-text')) {
-            el.innerHTML = 'Abu<span class="accent">saleem</span>'.split('').map(c =>
-                c === '<' ? el.innerHTML : `<span class="char">${c}</span>`
-            ).join('');
-            return;
-        }
-
-        const text = el.textContent;
-        el.innerHTML = text.split('').map(c =>
-            `<span class="char">${c === ' ' ? '&nbsp;' : c}</span>`
-        ).join('');
-        el.classList.add('ripple-text');
-    });
-});
-
-function triggerTextRipple() {
-    document.querySelectorAll('.ripple-text').forEach(el => {
-        if (!Utils.isInViewport(el)) return;
-        triggerCharRipple(el);
-    });
-}
-
-function triggerCharRipple(element) {
-    const chars = element.querySelectorAll('.char');
-    chars.forEach((char, i) => {
-        setTimeout(() => {
-            char.classList.add('ripple-active');
-            setTimeout(() => char.classList.remove('ripple-active'), 800);
-        }, i * 25);
-    });
-}
+/* Text splitting removed — too expensive animating hundreds of individual chars */
 
 /* ===================================
    SCROLL PROGRESS BAR
@@ -750,15 +615,7 @@ function initScrollProgress() {
    SECTION RIPPLE WAVES
    ================================= */
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.section').forEach(section => {
-        const wave = document.createElement('div');
-        wave.className = 'section-ripple-wave';
-        section.appendChild(wave);
-    });
-
-    document.querySelector('.footer')?.classList.add('footer-water-ripple');
-});
+/* Section ripple waves removed — too many animated pseudo-elements */
 
 // Add notification animation keyframes
 const notifStyle = document.createElement('style');
@@ -769,3 +626,354 @@ notifStyle.textContent = `
     }
 `;
 document.head.appendChild(notifStyle);
+
+/* ===================================
+   PRELOADER
+   ================================= */
+
+(function initPreloader() {
+    // Wait for DOM if not ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runPreloader);
+    } else {
+        runPreloader();
+    }
+
+    function runPreloader() {
+        const preloader = document.getElementById('preloader');
+        const progressBar = document.getElementById('preloader-progress');
+        const statusText = document.getElementById('preloader-status');
+
+        if (!preloader) return;
+
+    const statuses = ['Loading assets...', 'Initializing modules...', 'Preparing animations...', 'Almost ready...'];
+    let progress = 0;
+
+    const interval = setInterval(() => {
+        progress += Math.random() * 25 + 5;
+        if (progress > 100) progress = 100;
+
+        if (progressBar) progressBar.style.width = `${progress}%`;
+
+        const statusIndex = Math.min(Math.floor(progress / 25), statuses.length - 1);
+        if (statusText) statusText.textContent = statuses[statusIndex];
+
+        if (progress >= 100) {
+            clearInterval(interval);
+            setTimeout(() => {
+                preloader.classList.add('loaded');
+                document.body.style.overflow = '';
+            }, 400);
+        }
+    }, 200);
+
+    // Fallback: remove preloader after 3 seconds max
+    setTimeout(() => {
+        clearInterval(interval);
+        if (progressBar) progressBar.style.width = '100%';
+        preloader.classList.add('loaded');
+        document.body.style.overflow = '';
+    }, 3000);
+    } // close runPreloader
+})();
+
+/* ===================================
+   BACK TO TOP BUTTON
+   ================================= */
+
+(function initBackToTop() {
+    const backToTop = document.getElementById('back-to-top');
+    if (!backToTop) return;
+
+    window.addEventListener('scroll', Utils.throttle(() => {
+        backToTop.classList.toggle('visible', window.scrollY > 500);
+    }, 100), { passive: true });
+
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+})();
+
+/* ===================================
+   THEME TOGGLE
+   ================================= */
+
+(function initThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+    const icon = document.getElementById('theme-icon');
+    if (!toggle || !icon) return;
+
+    // Check saved theme
+    const savedTheme = localStorage.getItem('portfolio-theme');
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        icon.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    toggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        const isLight = document.body.classList.contains('light-theme');
+
+        if (isLight) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+            localStorage.setItem('portfolio-theme', 'light');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
+            localStorage.setItem('portfolio-theme', 'dark');
+        }
+    });
+})();
+
+/* ===================================
+   TESTIMONIALS SLIDER
+   ================================= */
+
+(function initTestimonialsSlider() {
+    const track = document.getElementById('testimonial-track');
+    const prevBtn = document.getElementById('testimonial-prev');
+    const nextBtn = document.getElementById('testimonial-next');
+    const dotsContainer = document.getElementById('testimonial-dots');
+
+    if (!track || !prevBtn || !nextBtn || !dotsContainer) return;
+
+    const cards = track.querySelectorAll('.testimonial-card');
+    const dots = dotsContainer.querySelectorAll('.dot');
+    let currentIndex = 0;
+    let autoPlayInterval;
+
+    function goToSlide(index) {
+        if (index < 0) index = cards.length - 1;
+        if (index >= cards.length) index = 0;
+        currentIndex = index;
+
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+        });
+    }
+
+    function startAutoPlay() {
+        autoPlayInterval = setInterval(() => goToSlide(currentIndex + 1), 5000);
+    }
+
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+    }
+
+    prevBtn.addEventListener('click', () => {
+        stopAutoPlay();
+        goToSlide(currentIndex - 1);
+        startAutoPlay();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        stopAutoPlay();
+        goToSlide(currentIndex + 1);
+        startAutoPlay();
+    });
+
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+            stopAutoPlay();
+            goToSlide(i);
+            startAutoPlay();
+        });
+    });
+
+    // Touch/swipe support
+    let startX = 0;
+    let isDragging = false;
+
+    track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+        stopAutoPlay();
+    }, { passive: true });
+
+    track.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+            goToSlide(diff > 0 ? currentIndex + 1 : currentIndex - 1);
+        }
+        isDragging = false;
+        startAutoPlay();
+    }, { passive: true });
+
+    startAutoPlay();
+})();
+
+/* ===================================
+   FUN FACTS COUNTER
+   ================================= */
+
+(function initFunFactCounters() {
+    const counters = document.querySelectorAll('.funfact-number');
+    if (!counters.length) return;
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.dataset.count);
+                animateFunCounter(entry.target, target);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(c => counterObserver.observe(c));
+
+    function animateFunCounter(element, target) {
+        const duration = 2000;
+        const steps = 60;
+        const increment = target / steps;
+        const stepTime = duration / steps;
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                element.textContent = target.toLocaleString() + '+';
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(current).toLocaleString();
+            }
+        }, stepTime);
+    }
+})();
+
+/* ===================================
+   NEWSLETTER FORM
+   ================================= */
+
+(function initNewsletter() {
+    const form = document.getElementById('newsletter-form');
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = form.querySelector('input').value;
+        if (email) {
+            showNotification('Thanks for subscribing! You\'ll hear from me soon.', 'success');
+            form.reset();
+        }
+    });
+})();
+
+/* ===================================
+   LAZY LOADING IMAGES
+   ================================= */
+
+(function initLazyImages() {
+    const images = document.querySelectorAll('.project-placeholder img');
+    if (!images.length) return;
+
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.6s ease';
+                
+                if (img.complete) {
+                    img.style.opacity = '1';
+                } else {
+                    img.addEventListener('load', () => {
+                        img.style.opacity = '1';
+                    });
+                    img.addEventListener('error', () => {
+                        img.style.opacity = '0.3';
+                    });
+                }
+                imageObserver.unobserve(img);
+            }
+        });
+    }, { rootMargin: '100px' });
+
+    images.forEach(img => imageObserver.observe(img));
+})();
+
+/* ===================================
+   SMOOTH SCROLL FOR ALL ANCHOR LINKS
+   ================================= */
+
+(function initSmoothAnchors() {
+    document.addEventListener('click', (e) => {
+        const anchor = e.target.closest('a[href^="#"]');
+        if (!anchor) return;
+        
+        const targetId = anchor.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const target = document.querySelector(targetId);
+        if (!target) return;
+        
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+})();
+
+/* ===================================
+   SMOOTH SCROLL FOR NEW NAV LINKS
+   ================================= */
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Observe new sections for scroll animation (light fade only)
+    const newSections = document.querySelectorAll('.services, .experience, .funfacts, .testimonials, .achievements, .cta-banner');
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible', 'animate');
+
+                const items = entry.target.querySelectorAll('.service-card, .experience-card, .funfact-item, .testimonial-card, .achievement-card');
+                items.forEach((item, i) => {
+                    setTimeout(() => {
+                        item.classList.add('animate');
+                    }, i * 80);
+                });
+            }
+        });
+    }, { rootMargin: '-50px', threshold: 0.1 });
+
+    newSections.forEach(section => sectionObserver.observe(section));
+
+    // Add tilt glow elements to interactive cards
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (!isTouchDevice) {
+        document.querySelectorAll('.service-card, .achievement-card').forEach(card => {
+            const glow = document.createElement('div');
+            glow.className = 'tilt-glow';
+            card.appendChild(glow);
+            
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                glow.style.left = `${e.clientX - rect.left}px`;
+                glow.style.top = `${e.clientY - rect.top}px`;
+                glow.style.opacity = '1';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                glow.style.opacity = '0';
+            });
+        });
+
+        // 3D tilt for service cards
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -8;
+                const rotateY = ((x - centerX) / centerX) * 8;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    }
+});

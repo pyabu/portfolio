@@ -8,22 +8,55 @@
         content="Abusaleem - App Developer & Web Developer specializing in Kotlin, Flutter, and modern web technologies">
     <meta name="keywords"
         content="Abusaleem, App Developer, Flutter Developer, Kotlin Developer, Web Developer, Portfolio">
-    <title>My Portfolio</title>
+    <meta name="author" content="Abusaleem">
+    <meta name="theme-color" content="#060814">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Abusaleem | App & Web Developer Portfolio">
+    <meta property="og:description" content="Passionate about crafting beautiful mobile applications and dynamic web experiences.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://abusaleem.dev">
+
+    <title>Abusaleem | App & Web Developer Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <li-nk rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudfare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <!-- Smooth Scroll -->
     <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">
+                <span class="preloader-text">A</span>
+                <span class="preloader-text">S</span>
+            </div>
+            <div class="preloader-bar">
+                <div class="preloader-progress" id="preloader-progress"></div>
+            </div>
+            <p class="preloader-status" id="preloader-status">Loading assets...</p>
+        </div>
+    </div>
+
     <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
     <div class="cursor-glow"></div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- Animated Background 1-->
     <div class="bg-animation">
@@ -42,9 +75,12 @@
             <div class="nav-menu" id="nav-menu">
                 <a href="#home" class="nav-link active">Home</a>
                 <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
                 <a href="#skills" class="nav-link">Skills</a>
+                <a href="#experience" class="nav-link">Experience</a>
                 <a href="#education" class="nav-link">Education</a>
                 <a href="#projects" class="nav-link">Projects</a>
+                <a href="#testimonials" class="nav-link">Testimonials</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
             <button class="nav-toggle" id="nav-toggle">
@@ -274,6 +310,91 @@
         </div>
     </section>
 
+    <!-- Services Section -->
+    <section id="services" class="services section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag"><i class="fas fa-concierge-bell"></i> What I Do</span>
+                <h2 class="section-title">My Services</h2>
+                <p class="section-subtitle">Delivering high-quality digital solutions tailored to your needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="service-number">01</div>
+                    </div>
+                    <h3>Mobile App Development</h3>
+                    <p>Building native Android apps with Kotlin and cross-platform apps with Flutter. Clean architecture, smooth animations, and optimized performance.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Native Android (Kotlin)</li>
+                        <li><i class="fas fa-check"></i> Cross-platform (Flutter)</li>
+                        <li><i class="fas fa-check"></i> UI/UX Implementation</li>
+                        <li><i class="fas fa-check"></i> App Store Deployment</li>
+                    </ul>
+                    <div class="service-hover-line"></div>
+                </div>
+                <div class="service-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="service-number">02</div>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>Creating responsive, modern websites and web applications with cutting-edge technologies. From landing pages to full-stack solutions.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Responsive Design</li>
+                        <li><i class="fas fa-check"></i> Modern Frameworks</li>
+                        <li><i class="fas fa-check"></i> API Integration</li>
+                        <li><i class="fas fa-check"></i> Performance Optimization</li>
+                    </ul>
+                    <div class="service-hover-line"></div>
+                </div>
+                <div class="service-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <div class="service-number">03</div>
+                    </div>
+                    <h3>UI/UX Design</h3>
+                    <p>Designing beautiful, intuitive interfaces that users love. Wireframing, prototyping, and creating pixel-perfect designs with attention to detail.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Wireframing & Prototyping</li>
+                        <li><i class="fas fa-check"></i> User Research</li>
+                        <li><i class="fas fa-check"></i> Visual Design</li>
+                        <li><i class="fas fa-check"></i> Design Systems</li>
+                    </ul>
+                    <div class="service-hover-line"></div>
+                </div>
+                <div class="service-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="service-number">04</div>
+                    </div>
+                    <h3>Backend & Database</h3>
+                    <p>Setting up robust backend solutions with Firebase, REST APIs, and database management. Secure, scalable, and reliable infrastructure.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Firebase Integration</li>
+                        <li><i class="fas fa-check"></i> REST API Development</li>
+                        <li><i class="fas fa-check"></i> Database Design</li>
+                        <li><i class="fas fa-check"></i> Cloud Deployment</li>
+                    </ul>
+                    <div class="service-hover-line"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Skills Section -->
     <section id="skills" class="skills section">
         <div class="container">
@@ -419,6 +540,117 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag"><i class="fas fa-briefcase"></i> Career Path</span>
+                <h2 class="section-title">Work Experience</h2>
+            </div>
+            <div class="experience-grid">
+                <div class="experience-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="experience-header">
+                        <div class="experience-company-logo">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="experience-meta">
+                            <h3>Freelance Developer</h3>
+                            <h4>Self-Employed</h4>
+                            <span class="experience-date"><i class="fas fa-calendar-alt"></i> 2023 - Present</span>
+                        </div>
+                        <span class="experience-type">Freelance</span>
+                    </div>
+                    <p class="experience-description">Delivering custom mobile and web development solutions for clients. Building apps from concept to deployment with focus on quality and user experience.</p>
+                    <div class="experience-skills">
+                        <span>Kotlin</span>
+                        <span>Flutter</span>
+                        <span>Firebase</span>
+                        <span>REST APIs</span>
+                    </div>
+                </div>
+                <div class="experience-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="experience-header">
+                        <div class="experience-company-logo">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <div class="experience-meta">
+                            <h3>Android Developer Intern</h3>
+                            <h4>Tech Startup</h4>
+                            <span class="experience-date"><i class="fas fa-calendar-alt"></i> 2023 (6 months)</span>
+                        </div>
+                        <span class="experience-type">Internship</span>
+                    </div>
+                    <p class="experience-description">Contributed to Android app development using Kotlin. Worked on UI implementation, API integration, and bug fixing in an agile team environment.</p>
+                    <div class="experience-skills">
+                        <span>Android</span>
+                        <span>Kotlin</span>
+                        <span>MVVM</span>
+                        <span>Git</span>
+                    </div>
+                </div>
+                <div class="experience-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="experience-header">
+                        <div class="experience-company-logo">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="experience-meta">
+                            <h3>Web Developer</h3>
+                            <h4>Academic Projects</h4>
+                            <span class="experience-date"><i class="fas fa-calendar-alt"></i> 2021 - 2023</span>
+                        </div>
+                        <span class="experience-type">Academic</span>
+                    </div>
+                    <p class="experience-description">Developed multiple web applications as part of academic coursework. Built production-quality projects including Property Hub Management and AI Resume Builder.</p>
+                    <div class="experience-skills">
+                        <span>HTML/CSS</span>
+                        <span>JavaScript</span>
+                        <span>PHP</span>
+                        <span>MySQL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fun Facts Section -->
+    <section id="funfacts" class="funfacts section">
+        <div class="container">
+            <div class="funfacts-grid">
+                <div class="funfact-item">
+                    <div class="funfact-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="funfact-number" data-count="15000">0</div>
+                    <div class="funfact-label">Lines of Code Written</div>
+                </div>
+                <div class="funfact-item">
+                    <div class="funfact-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <div class="funfact-number" data-count="500">0</div>
+                    <div class="funfact-label">Cups of Coffee</div>
+                </div>
+                <div class="funfact-item">
+                    <div class="funfact-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <div class="funfact-number" data-count="300">0</div>
+                    <div class="funfact-label">Bugs Squashed</div>
+                </div>
+                <div class="funfact-item">
+                    <div class="funfact-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="funfact-number" data-count="10">0</div>
+                    <div class="funfact-label">Projects Completed</div>
                 </div>
             </div>
         </div>
@@ -617,12 +849,224 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag"><i class="fas fa-quote-left"></i> Reviews</span>
+                <h2 class="section-title">What People Say</h2>
+                <p class="section-subtitle">Feedback from colleagues, mentors, and collaborators</p>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonial-track" id="testimonial-track">
+                    <div class="testimonial-card glass-card">
+                        <div class="glass-shimmer-overlay"></div>
+                        <div class="testimonial-quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">Abusaleem is an exceptionally talented developer. His work on the HearAlert project demonstrated outstanding technical skills and a deep understanding of mobile development. Highly recommended!</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Prof. R. Kumar</h4>
+                                <span>Project Guide, Pondicherry University</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-card glass-card">
+                        <div class="glass-shimmer-overlay"></div>
+                        <div class="testimonial-quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">Working with Abusaleem was a great experience. He delivered a stunning mobile app ahead of schedule with excellent code quality. His attention to UI details is impressive.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Arjun M.</h4>
+                                <span>Freelance Client</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-card glass-card">
+                        <div class="glass-shimmer-overlay"></div>
+                        <div class="testimonial-quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">A reliable and creative developer who brings fresh ideas to every project. His Property Hub Management system was a comprehensive, well-designed solution that exceeded expectations.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Dr. S. Priya</h4>
+                                <span>HOD, Computer Science Dept.</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-controls">
+                    <button class="testimonial-btn prev" id="testimonial-prev" aria-label="Previous testimonial">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="testimonial-dots" id="testimonial-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <button class="testimonial-btn next" id="testimonial-next" aria-label="Next testimonial">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Marquee / Infinite Scroll -->
+    <div class="tech-marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span class="marquee-item"><i class="fab fa-html5"></i> HTML5</span>
+                <span class="marquee-item"><i class="fab fa-css3-alt"></i> CSS3</span>
+                <span class="marquee-item"><i class="fab fa-js"></i> JavaScript</span>
+                <span class="marquee-item"><i class="fab fa-android"></i> Kotlin</span>
+                <span class="marquee-item"><i class="fab fa-react"></i> React</span>
+                <span class="marquee-item"><i class="fab fa-node-js"></i> Node.js</span>
+                <span class="marquee-item"><i class="fab fa-git-alt"></i> Git</span>
+                <span class="marquee-item"><i class="fas fa-fire"></i> Firebase</span>
+                <span class="marquee-item"><i class="fab fa-figma"></i> Figma</span>
+                <span class="marquee-item"><i class="fas fa-database"></i> SQL</span>
+                <span class="marquee-item"><i class="fas fa-cloud"></i> REST APIs</span>
+                <span class="marquee-item"><i class="fas fa-mobile-alt"></i> Flutter</span>
+            </div>
+            <div class="marquee-content" aria-hidden="true">
+                <span class="marquee-item"><i class="fab fa-html5"></i> HTML5</span>
+                <span class="marquee-item"><i class="fab fa-css3-alt"></i> CSS3</span>
+                <span class="marquee-item"><i class="fab fa-js"></i> JavaScript</span>
+                <span class="marquee-item"><i class="fab fa-android"></i> Kotlin</span>
+                <span class="marquee-item"><i class="fab fa-react"></i> React</span>
+                <span class="marquee-item"><i class="fab fa-node-js"></i> Node.js</span>
+                <span class="marquee-item"><i class="fab fa-git-alt"></i> Git</span>
+                <span class="marquee-item"><i class="fas fa-fire"></i> Firebase</span>
+                <span class="marquee-item"><i class="fab fa-figma"></i> Figma</span>
+                <span class="marquee-item"><i class="fas fa-database"></i> SQL</span>
+                <span class="marquee-item"><i class="fas fa-cloud"></i> REST APIs</span>
+                <span class="marquee-item"><i class="fas fa-mobile-alt"></i> Flutter</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="achievements section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag"><i class="fas fa-award"></i> Milestones</span>
+                <h2 class="section-title">Achievements & Certifications</h2>
+                <p class="section-subtitle">Continuous learning is the foundation of growth</p>
+            </div>
+            <div class="achievements-grid">
+                <div class="achievement-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="achievement-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h3>MSc Computer Science</h3>
+                        <p>Pondicherry University - Master's degree with focus on mobile development and software engineering</p>
+                        <span class="achievement-date">2024 - 2026</span>
+                    </div>
+                </div>
+                <div class="achievement-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="achievement-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h3>Android Development</h3>
+                        <p>Certified in building native Android applications using Kotlin and modern architecture patterns</p>
+                        <span class="achievement-date">2023</span>
+                    </div>
+                </div>
+                <div class="achievement-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="achievement-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h3>Best Project Award</h3>
+                        <p>HearAlert - Innovative health monitoring app recognized for technical excellence and user impact</p>
+                        <span class="achievement-date">2025</span>
+                    </div>
+                </div>
+                <div class="achievement-card glass-card">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="achievement-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h3>Open Source Contributor</h3>
+                        <p>Active contributor to Flutter and Android open-source community projects on GitHub</p>
+                        <span class="achievement-date">Ongoing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+        <div class="container">
+            <div class="cta-content glass-card">
+                <div class="glass-shimmer-overlay"></div>
+                <div class="cta-text">
+                    <h2>Ready to bring your ideas to life?</h2>
+                    <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+                </div>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn btn-primary hover-glow-effect">
+                        <i class="fas fa-paper-plane"></i>
+                        Start a Project
+                    </a>
+                    <a href="https://wa.me/916379314464" target="_blank" class="btn btn-secondary hover-glow-effect">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact section">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag"><i class="fas fa-envelope"></i> Get In Touch</span>
                 <h2 class="section-title">Let's Work Together</h2>
+                <p class="section-subtitle">Have a project in mind? Let's create something amazing together.</p>
             </div>
             <div class="contact-content">
                 <div class="contact-info">
@@ -659,6 +1103,16 @@
                         <div class="contact-details">
                             <h4>Phone</h4>
                             <p>+91 6379314464</p>
+                        </div>
+                    </div>
+                    <div class="contact-card glass-card">
+                        <div class="glass-shimmer-overlay"></div>
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>WhatsApp</h4>
+                            <a href="https://wa.me/916379314464" target="_blank" style="color: var(--primary); text-decoration: none;">Chat on WhatsApp</a>
                         </div>
                     </div>
                     <div class="social-links">
@@ -709,19 +1163,48 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-
+                    <a href="#home" class="footer-logo">
+                        <span class="logo-text">Abu <span class="accent">Saleem</span></span>
+                    </a>
                     <p>Building high-performance technological solutions with precision and technical mastery.</p>
+                    <div class="footer-social">
+                        <a href="https://github.com/pyabu" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
-                <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#about">About</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#contact">Contact</a>
+                <div class="footer-nav">
+                    <h4>Quick Links</h4>
+                    <div class="footer-links">
+                        <a href="#home">Home</a>
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#projects">Projects</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                </div>
+                <div class="footer-services-col">
+                    <h4>Services</h4>
+                    <div class="footer-links">
+                        <a href="#services">Mobile Development</a>
+                        <a href="#services">Web Development</a>
+                        <a href="#services">UI/UX Design</a>
+                        <a href="#services">Backend Solutions</a>
+                    </div>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>Stay Connected</h4>
+                    <p>Get updates on my latest projects and tech articles.</p>
+                    <form class="newsletter-form" id="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 All rights reserved.</p>
-                <p><i class="fas fa-code"></i> Professional Portfolio | Engineering Excellence</p>
+                <p>&copy; 2026 Abusaleem. All rights reserved.</p>
+                <p>Made with <i class="fas fa-heart"></i> & <i class="fas fa-code"></i></p>
             </div>
         </div>
     </footer>
