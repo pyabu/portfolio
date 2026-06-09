@@ -3,13 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="description"
-        content="Abusaleem - App Developer & Web Developer specializing in Kotlin, Flutter, and modern web technologies">
+        content="Abusaleem - App Developer &amp; Web Developer specializing in Kotlin, Flutter, and modern web technologies">
     <meta name="keywords"
         content="Abusaleem, App Developer, Flutter Developer, Kotlin Developer, Web Developer, Portfolio">
     <meta name="author" content="Abusaleem">
-    <meta name="theme-color" content="#060814">
+    <meta name="theme-color" content="#0a0f1e">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Abusaleem | App & Web Developer Portfolio">
@@ -21,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -91,146 +94,131 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section — Professional Clean -->
     <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-rocket"></i>
-                <span>Available for Work</span>
-            </div>
-            <h1 class="hero-title">
-                <span class="greeting">Hello, I'm</span>
-                <span class="name">Abusaleem</span>
-            </h1>
-            <div class="hero-subtitle">
-                <span class="typing-text" id="typing-text"></span>
-                <span class="cursor">|</span>
-            </div>
-            <p class="hero-description">
-                Passionate about crafting beautiful mobile applications and dynamic web experiences.
-                Transforming ideas into reality with clean code and innovative solutions.
-            </p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn btn-primary hover-glow-effect">
-                    <i class="fas fa-eye"></i>
-                    View My Work
-                </a>
-                <a href="#contact" class="btn btn-secondary hover-glow-effect">
-                    <i class="fas fa-paper-plane"></i>
-                    Get In Touch
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number" data-count="10">0</span><span class="stat-plus">+</span>
-                    <span class="stat-label">Projects</span>
+
+        <!-- Dot grid background -->
+        <div class="hero-dotgrid"></div>
+
+        <!-- Subtle gradient accent -->
+        <div class="hero-accent-glow"></div>
+
+        <div class="container hero-inner">
+
+            <!-- LEFT — Text content -->
+            <div class="hero-content">
+
+                <!-- Status badge -->
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span>Available for new opportunities</span>
                 </div>
-                <div class="stat">
-                    <span class="stat-number" data-count="3">0</span><span class="stat-plus">+</span>
-                    <span class="stat-label">Years Experience</span>
+
+                <!-- Intro line -->
+                <p class="hero-intro">Hi, I'm</p>
+
+                <!-- Name -->
+                <h1 class="hero-name-pro">Abusaleem</h1>
+
+                <!-- Role -->
+                <div class="hero-role">
+                    <span class="role-bar"></span>
+                    <span class="typing-text" id="typing-text"></span>
+                    <span class="cursor">|</span>
                 </div>
-                <div class="stat">
-                    <span class="stat-number" data-count="5">0</span><span class="stat-plus">+</span>
-                    <span class="stat-label">Technologies</span>
+
+                <!-- Description -->
+                <p class="hero-description-pro">
+                    I design and build <strong>mobile apps</strong> and <strong>web experiences</strong>
+                    with Flutter, Kotlin &amp; JavaScript — focused on clean architecture,
+                    great UX, and code that scales.
+                </p>
+
+                <!-- CTA -->
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">
+                        View Projects <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary-pro">
+                        Contact Me
+                    </a>
+                    <a href="#" class="btn btn-ghost-pro" title="Download CV">
+                        <i class="fas fa-file-arrow-down"></i> CV
+                    </a>
                 </div>
+
+                <!-- Social links -->
+                <div class="hero-social-row">
+                    <span class="social-label">Find me on</span>
+                    <div class="hero-socials-pro">
+                        <a href="https://github.com/pyabu" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="mailto:abusaleem@example.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+
             </div>
+
+            <!-- RIGHT — Terminal Card -->
+            <div class="hero-visual-pro">
+
+                <!-- Terminal window -->
+                <div class="terminal-card" id="terminal-card">
+
+                    <!-- Title bar -->
+                    <div class="term-titlebar">
+                        <div class="term-dots">
+                            <span class="term-dot dot-red"></span>
+                            <span class="term-dot dot-yellow"></span>
+                            <span class="term-dot dot-green"></span>
+                        </div>
+                        <span class="term-title">abusaleem — bash — 80×24</span>
+                        <div class="term-spacer"></div>
+                    </div>
+
+                    <!-- Terminal body -->
+                    <div class="term-body" id="term-body">
+                        <!-- Lines are injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Floating stat chips below terminal -->
+                <div class="term-chips">
+                    <div class="term-chip">
+                        <span class="tc-num" data-count="10">0</span><span class="tc-sym">+</span>
+                        <span class="tc-label">Projects</span>
+                    </div>
+                    <div class="term-chip-sep"></div>
+                    <div class="term-chip">
+                        <span class="tc-num" data-count="3">0</span><span class="tc-sym">+</span>
+                        <span class="tc-label">Years</span>
+                    </div>
+                    <div class="term-chip-sep"></div>
+                    <div class="term-chip">
+                        <span class="tc-num" data-count="8">0</span><span class="tc-sym">+</span>
+                        <span class="tc-label">Tech Stack</span>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-        <div class="hero-visual">
-            <div class="tech-orbit">
-                <!-- Central Tech Card -->
-                <div class="orbit-center">
-                    <div class="center-icon">
-                        <i class="fas fa-microchip"></i>
-                    </div>
-                    <span class="center-label">Tech Stack</span>
-                </div>
 
-                <!-- Orbital Tech Cards -->
-                <div class="orbit-card" style="--orbit-index: 0;">
-                    <div class="card-icon">
-                        <i class="fab fa-html5"></i>
-                    </div>
-                    <span class="card-label">HTML</span>
-                </div>
-
-                <div class="orbit-card" style="--orbit-index: 1;">
-                    <div class="card-icon">
-                        <i class="fab fa-css3-alt"></i>
-                    </div>
-                    <span class="card-label">CSS</span>
-                </div>
-
-                <div class="orbit-card" style="--orbit-index: 2;">
-                    <div class="card-icon">
-                        <!-- Replaced fa-flutter with SVG -->
-                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                            <path
-                                d="M14.314 0L2.3 12 6 15.7 21.684 0h-7.37zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z" />
-                        </svg>
-                    </div>
-                    <span class="card-label">Flutter</span>
-                </div>
-
-                <div class="orbit-card" style="--orbit-index: 3;">
-                    <div class="card-icon">
-                        <i class="fab fa-android"></i>
-                    </div>
-                    <span class="card-label">Kotlin</span>
-                </div>
-
-                <div class="orbit-card" style="--orbit-index: 4;">
-                    <div class="card-icon">
-                        <i class="fab fa-react"></i>
-                    </div>
-                    <span class="card-label">React</span>
-                </div>
-
-                <div class="orbit-card" style="--orbit-index: 5;">
-                    <div class="card-icon">
-                        <i class="fab fa-node-js"></i>
-                    </div>
-                    <span class="card-label">Node.js</span>
-                </div>
-
-                <!-- Decorative Stars -->
-                <span class="orbit-star" style="--star-x: 10%; --star-y: 15%;"></span>
-                <span class="orbit-star" style="--star-x: 85%; --star-y: 20%;"></span>
-                <span class="orbit-star" style="--star-x: 15%; --star-y: 75%;"></span>
-                <span class="orbit-star" style="--star-x: 90%; --star-y: 80%;"></span>
-            </div>
-            <div class="code-window">
-                <div class="glass-shimmer-overlay"></div>
-                <div class="window-header">
-                    <div class="window-dots">
-                        <span class="dot red"></span>
-                        <span class="dot yellow"></span>
-                        <span class="dot green"></span>
-                    </div>
-                    <span class="window-title">developer.kt</span>
-                </div>
-                <div class="window-content">
-                    <pre><code><span class="keyword">class</span> <span class="class-name">Developer</span> {
-    <span class="keyword">val</span> name = <span class="string">"Abusaleem"</span>
-    <span class="keyword">val</span> role = <span class="string">"App & Web Developer"</span>
-    <span class="keyword">val</span> skills = <span class="function">listOf</span>(
-        <span class="string">"Kotlin"</span>, <span class="string">"Flutter"</span>,
-        <span class="string">"JavaScript"</span>, <span class="string">"HTML/CSS"</span>
-    )
-    
-    <span class="keyword">fun</span> <span class="function">createAwesome</span>() = <span class="string">"🚀"</span>
-}</code></pre>
-                </div>
-            </div>
-        </div>
-        <a href="#about" class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-            <span>Scroll Down</span>
+        <!-- Scroll cue -->
+        <a href="#about" class="hero-scroll-cue">
+            <span class="hsc-label">Scroll down</span>
+            <span class="hsc-arrow"><i class="fas fa-chevron-down"></i></span>
         </a>
+
     </section>
 
+
+
+
     <!-- About Section -->
+
+
     <section id="about" class="about section">
         <div class="container">
             <div class="section-header">
@@ -722,11 +710,47 @@
                 <h2 class="section-title">Featured Projects</h2>
             </div>
             <div class="project-filters">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="mobile">Mobile</button>
-                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn active" data-filter="all"><span>All</span></button>
+                <button class="filter-btn" data-filter="mobile"><span>Mobile</span></button>
+                <button class="filter-btn" data-filter="web"><span>Web</span></button>
             </div>
             <div class="projects-grid">
+                <!-- Career Guidance — Featured Project -->
+                <div class="project-card featured-card" data-category="web">
+                    <div class="glass-shimmer-overlay"></div>
+                    <div class="project-image">
+                        <div class="project-placeholder career-guidance">
+                            <div class="cg-preview">
+                                <div class="cg-browser-bar">
+                                    <span class="cg-dot"></span><span class="cg-dot"></span><span class="cg-dot"></span>
+                                    <span class="cg-url">careerguidance.me</span>
+                                </div>
+                                <div class="cg-body">
+                                    <div class="cg-hero-text">Find Your Dream Job</div>
+                                    <div class="cg-subtext">AI-powered career guidance platform</div>
+                                    <div class="cg-tags">
+                                        <span>Resume</span><span>Jobs</span><span>Mentors</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-overlay">
+                            <a href="https://github.com/pyabu" target="_blank" class="project-link"><i class="fab fa-github"></i></a>
+                            <a href="https://careerguidance.me" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Live Web Application ✦ Featured</div>
+                        <h3>Career Guidance</h3>
+                        <p>A comprehensive career platform that helps users find their dream jobs with AI-powered resume building, job matching, career counselling, and expert mentor connections.</p>
+                        <div class="project-tech">
+                            <span>HTML/CSS</span>
+                            <span>JavaScript</span>
+                            <span>Python</span>
+                            <span>AI/ML</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="project-card" data-category="mobile">
                     <div class="glass-shimmer-overlay"></div>
                     <div class="project-image">
