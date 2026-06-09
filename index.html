@@ -160,50 +160,97 @@
 
             </div>
 
-            <!-- RIGHT — Terminal Card -->
+            <!-- RIGHT — Holographic ID Card -->
             <div class="hero-visual-pro">
 
-                <!-- Terminal window -->
-                <div class="terminal-card" id="terminal-card">
+                <!-- 3D Scene wrapper -->
+                <div class="holo-scene" id="holo-scene">
+                    <div class="holo-card" id="holo-card">
 
-                    <!-- Title bar -->
-                    <div class="term-titlebar">
-                        <div class="term-dots">
-                            <span class="term-dot dot-red"></span>
-                            <span class="term-dot dot-yellow"></span>
-                            <span class="term-dot dot-green"></span>
+                        <!-- Holographic rainbow shine layer (moves with mouse) -->
+                        <div class="holo-shine" id="holo-shine"></div>
+                        <!-- Specular glare spot -->
+                        <div class="holo-glare" id="holo-glare"></div>
+
+                        <!-- Card top strip -->
+                        <div class="holo-topstrip">
+                            <div class="holo-logo">
+                                <span class="hl-init">A</span><span class="hl-dot">·</span><span class="hl-init">S</span>
+                            </div>
+                            <div class="holo-badge-available">
+                                <span class="holo-dot"></span> Available
+                            </div>
                         </div>
-                        <span class="term-title">abusaleem — bash — 80×24</span>
-                        <div class="term-spacer"></div>
-                    </div>
 
-                    <!-- Terminal body -->
-                    <div class="term-body" id="term-body">
-                        <!-- Lines are injected by JS -->
+                        <!-- EMV Chip + Avatar -->
+                        <div class="holo-mid">
+                            <div class="holo-chip">
+                                <div class="chip-inner">
+                                    <div class="chip-h"></div>
+                                    <div class="chip-v"></div>
+                                    <div class="chip-c"></div>
+                                </div>
+                            </div>
+                            <div class="holo-avatar">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                        </div>
+
+                        <!-- Name block -->
+                        <div class="holo-identity">
+                            <h3 class="holo-name">Abusaleem</h3>
+                            <p class="holo-title">Full-Stack &amp; Mobile Developer</p>
+                        </div>
+
+                        <!-- Card "number" — encoded skills -->
+                        <div class="holo-number">
+                            <span>FLUTTER</span>
+                            <span>KOTLIN</span>
+                            <span>JAVASCRIPT</span>
+                            <span>FIREBASE</span>
+                        </div>
+
+                        <!-- Footer row -->
+                        <div class="holo-footer">
+                            <div class="holo-footer-col">
+                                <span class="holo-label">VALID SINCE</span>
+                                <span class="holo-val">2021</span>
+                            </div>
+                            <div class="holo-footer-col">
+                                <span class="holo-label">STACK</span>
+                                <span class="holo-val">FULL-STACK</span>
+                            </div>
+                            <div class="holo-footer-col holo-footer-right">
+                                <i class="fab fa-github"></i>
+                                <i class="fab fa-figma"></i>
+                                <i class="fab fa-html5"></i>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                <!-- Floating stat chips below terminal -->
-                <div class="term-chips">
-                    <div class="term-chip">
-                        <span class="tc-num" data-count="10">0</span><span class="tc-sym">+</span>
-                        <span class="tc-label">Projects</span>
+                <!-- Stats row below card -->
+                <div class="holo-stats-row">
+                    <div class="holo-stat">
+                        <span class="hs-n" data-count="10">0</span><span class="hs-sym">+</span>
+                        <span class="hs-l">Projects</span>
                     </div>
-                    <div class="term-chip-sep"></div>
-                    <div class="term-chip">
-                        <span class="tc-num" data-count="3">0</span><span class="tc-sym">+</span>
-                        <span class="tc-label">Years</span>
+                    <div class="holo-stat-sep"></div>
+                    <div class="holo-stat">
+                        <span class="hs-n" data-count="3">0</span><span class="hs-sym">+</span>
+                        <span class="hs-l">Years Exp</span>
                     </div>
-                    <div class="term-chip-sep"></div>
-                    <div class="term-chip">
-                        <span class="tc-num" data-count="8">0</span><span class="tc-sym">+</span>
-                        <span class="tc-label">Tech Stack</span>
+                    <div class="holo-stat-sep"></div>
+                    <div class="holo-stat">
+                        <span class="hs-n" data-count="8">0</span><span class="hs-sym">+</span>
+                        <span class="hs-l">Tech Stack</span>
                     </div>
                 </div>
 
             </div>
 
-        </div>
+        </div><!-- /.container.hero-inner -->
 
         <!-- Scroll cue -->
         <a href="#about" class="hero-scroll-cue">
@@ -211,14 +258,10 @@
             <span class="hsc-arrow"><i class="fas fa-chevron-down"></i></span>
         </a>
 
-    </section>
-
-
+    </section><!-- /#home -->
 
 
     <!-- About Section -->
-
-
     <section id="about" class="about section">
         <div class="container">
             <div class="section-header">

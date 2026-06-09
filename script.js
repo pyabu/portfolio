@@ -73,8 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSectionReveal();
   initParallaxDotGrid();
   initSkillBars();
-  initHeroParallax();
-  initTerminal();
+  initHoloCard();
 });
 
 /* ══════════════════════════════
@@ -224,29 +223,19 @@ function initTyping() {
    INTERSECTION OBSERVERS
    ══════════════════════════════ */
 function initObservers() {
-  // Section reveal
+  // Mark sections as visible (for any legacy CSS that uses .visible)
   const io = new IntersectionObserver(entries => {
     entries.forEach(en => {
       if (en.isIntersecting) {
         en.target.classList.add('visible');
-        // Stagger children
-        en.target.querySelectorAll('.glass-card, .skill-item, .project-card, .highlight, .timeline-content, .funfact-item, .achievement-card, .service-card, .experience-card, .contact-card')
-          .forEach((el, i) => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = `opacity 0.5s ease ${i*0.07}s, transform 0.5s ease ${i*0.07}s`;
-            setTimeout(() => {
-              el.style.opacity = '1';
-              el.style.transform = 'translateY(0)';
-            }, 50 + i * 70);
-          });
+        io.unobserve(en.target);
       }
     });
-  }, { rootMargin: '-50px', threshold: 0.07 });
+  }, { rootMargin: '-40px', threshold: 0.06 });
 
   DOM.sections.forEach(s => io.observe(s));
 
-  // Skill bars
+  // Skill bars animate on scroll
   const skillIO = new IntersectionObserver(entries => {
     entries.forEach(en => {
       if (en.isIntersecting) {
@@ -717,7 +706,6 @@ function initMagneticButtons() {
    SECTION REVEAL — Clip-path wipe + fade
    ══════════════════════════════════════════════ */
 function initSectionReveal() {
-  // Targets to animate on scroll
   const selectors = [
     '.section-header',
     '.about-text h3, .about-text p, .about-text .btn',
@@ -738,11 +726,16 @@ function initSectionReveal() {
 
   all.forEach((el, i) => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
+    el.style.transform = 'translateY(24px)';
     el.style.transition =
-      `opacity 0.6s ease ${(i % 6) * 0.07}s, ` +
-      `transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94) ${(i % 6) * 0.07}s`;
+      `opacity 0.55s ease ${(i % 5) * 0.06}s, ` +
+      `transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94) ${(i % 5) * 0.06}s`;
   });
+
+  // Fallback: force everything visible after 3s in case observer misses anything
+  const fallback = setTimeout(() => {
+    all.forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; });
+  }, 3000);
 
   const io = new IntersectionObserver(entries => {
     entries.forEach(en => {
@@ -752,11 +745,11 @@ function initSectionReveal() {
         io.unobserve(en.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
 
   all.forEach(el => io.observe(el));
 
-  // Gold underline on section titles when they scroll into view
+  // Gold underline on section titles
   const titleIO = new IntersectionObserver(entries => {
     entries.forEach(en => {
       if (en.isIntersecting) {
@@ -764,7 +757,7 @@ function initSectionReveal() {
         titleIO.unobserve(en.target);
       }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.4 });
   document.querySelectorAll('.section-title').forEach(t => titleIO.observe(t));
 }
 
@@ -813,196 +806,93 @@ function initSkillBars() {
 }
 
 /* ══════════════════════════════════════════════
-   TERMINAL — Animated typewriter engine
+   HOLOGRAPHIC CARD — 3D tilt + rainbow shimmer
    ══════════════════════════════════════════════ */
-function initTerminal() {
-  const body = document.getElementById('term-body');
-  if (!body) return;
+function initHoloCard() {
+  const card  = document.getElementById('holo-card');
+  const shine = document.getElementById('holo-shine');
+  const glare = document.getElementById('holo-glare');
+  if (!card) return;
 
-  // Terminal script: each entry is either a command or output
-  const SCRIPT = [
-    { type: 'prompt', text: 'whoami' },
-    { type: 'out',    text: '<span class="term-green">abusaleem</span>  <span class="term-muted"># Full-Stack & Mobile Dev</span>' },
-    { type: 'blank' },
-    { type: 'prompt', text: 'cat ./skills.json' },
-    { type: 'out',    text: '<span class="term-muted">{</span>' },
-    { type: 'out',    text: '  <span class="term-blue">"mobile"</span><span class="term-muted">:</span>  <span class="term-gold">["Flutter", "Kotlin", "Android"]</span><span class="term-muted">,</span>' },
-    { type: 'out',    text: '  <span class="term-blue">"web"</span><span class="term-muted">:</span>     <span class="term-gold">["JavaScript", "HTML", "CSS"]</span><span class="term-muted">,</span>' },
-    { type: 'out',    text: '  <span class="term-blue">"tools"</span><span class="term-muted">:</span>   <span class="term-gold">["Firebase", "Git", "Figma"]</span>' },
-    { type: 'out',    text: '<span class="term-muted">}</span>' },
-    { type: 'blank' },
-    { type: 'prompt', text: 'git log --oneline -3' },
-    { type: 'out',    text: '<span class="term-gold">a3f9c12</span> <span class="term-white">feat: launch CareerGuidance.me</span>' },
-    { type: 'out',    text: '<span class="term-gold">d8e1a04</span> <span class="term-white">fix: Flutter performance on iOS</span>' },
-    { type: 'out',    text: '<span class="term-gold">b2c5f71</span> <span class="term-white">refactor: clean architecture</span>' },
-    { type: 'blank' },
-    { type: 'prompt', text: 'echo $STATUS' },
-    { type: 'out',    text: '<span class="term-cyan">✓ Open to work  ·  Available now  ·  Remote OK</span>' },
-    { type: 'blank' },
-    { type: 'prompt', text: '' },   // final blinking cursor
-  ];
+  const MAX_TILT  = 18;   // degrees
+  const LERP_SPD  = 0.1;  // 0-1, higher = snappier
 
-  const CHAR_DELAY   = 40;   // ms per character for commands
-  const LINE_PAUSE   = 320;  // ms pause after each output line
-  const CMD_PAUSE    = 600;  // ms pause before showing output
-  const LOOP_DELAY   = 4000; // ms before restarting
-
-  let lineIndex = 0;
-  let timeout;
-
-  function sleep(ms) {
-    return new Promise(r => setTimeout(r, ms));
-  }
-
-  function makePromptLine(partial, showCursor) {
-    return `<span class="term-prompt">❯</span> <span class="term-cmd">${partial}</span>${showCursor ? '<span class="term-cursor"></span>' : ''}`;
-  }
-
-  async function typeCommand(text) {
-    const line = document.createElement('span');
-    line.className = 'term-line';
-    line.innerHTML = makePromptLine('', true);
-    body.appendChild(line);
-    scrollToBottom();
-
-    for (let i = 0; i <= text.length; i++) {
-      line.innerHTML = makePromptLine(text.slice(0, i), true);
-      await sleep(CHAR_DELAY + Math.random() * 20);
-    }
-    // Remove cursor after typing
-    line.innerHTML = makePromptLine(text, false);
-    await sleep(CMD_PAUSE);
-  }
-
-  function addOutputLine(html) {
-    const line = document.createElement('span');
-    line.className = 'term-line';
-    line.innerHTML = html;
-    body.appendChild(line);
-    scrollToBottom();
-  }
-
-  function addBlank() {
-    const line = document.createElement('span');
-    line.className = 'term-line';
-    line.innerHTML = ' ';
-    body.appendChild(line);
-  }
-
-  function addFinalPrompt() {
-    const line = document.createElement('span');
-    line.className = 'term-line';
-    line.innerHTML = makePromptLine('', true);
-    body.appendChild(line);
-    scrollToBottom();
-  }
-
-  function scrollToBottom() {
-    body.scrollTop = body.scrollHeight;
-  }
-
-  async function runScript() {
-    body.innerHTML = '';
-    for (const step of SCRIPT) {
-      if (step.type === 'prompt') {
-        if (step.text === '') {
-          addFinalPrompt();
-          break;
-        }
-        await typeCommand(step.text);
-      } else if (step.type === 'out') {
-        addOutputLine(step.html || step.text);
-        await sleep(LINE_PAUSE);
-      } else if (step.type === 'blank') {
-        addBlank();
-        await sleep(100);
-      }
-    }
-    // Auto-restart after delay
-    timeout = setTimeout(runScript, LOOP_DELAY);
-  }
-
-  // Start when terminal enters viewport
-  const io = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      runScript();
-      io.disconnect();
-    }
-  }, { threshold: 0.3 });
-  io.observe(body);
-
-  // Also init counters for tc-num elements
-  document.querySelectorAll('.tc-num[data-count]').forEach(el => {
-    const obs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        countUp(el);
-        obs.unobserve(el);
-      }
-    }, { threshold: 0.5 });
-    obs.observe(el);
-  });
-}
-
-/* ══════════════════════════════════════════════
-   HERO PARALLAX — Mouse-move depth engine
-   ══════════════════════════════════════════════ */
-function initHeroParallax() {
-  const wrapper = document.getElementById('hero-parallax');
-  if (!wrapper) return;
-  // Don't run on touch devices
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-
-  const layers = wrapper.querySelectorAll('.hv-layer[data-depth]');
-  let targetX = 0, targetY = 0;
-  let currentX = 0, currentY = 0;
+  let targetRX = 0, targetRY = 0;
+  let currentRX = 0, currentRY = 0;
+  let isHovering = false;
   let rafId;
-  const STRENGTH = 28; // max px offset at depth 1
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   function onMouseMove(e) {
-    const rect = wrapper.getBoundingClientRect();
-    const cx = rect.left + rect.width  / 2;
-    const cy = rect.top  + rect.height / 2;
-    targetX = (e.clientX - cx) / (rect.width  / 2);  // -1 to +1
-    targetY = (e.clientY - cy) / (rect.height / 2);
+    const rect = card.getBoundingClientRect();
+    // Normalized position -1 to +1
+    const nx = ((e.clientX - rect.left) / rect.width)  * 2 - 1;
+    const ny = ((e.clientY - rect.top)  / rect.height) * 2 - 1;
+
+    targetRY =  nx * MAX_TILT;
+    targetRX = -ny * MAX_TILT;
+
+    // Update shine origin (CSS custom props)
+    const px = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1);
+    const py = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1);
+    card.style.setProperty('--shine-x', px + '%');
+    card.style.setProperty('--shine-y', py + '%');
+    card.style.setProperty('--glare-x', px + '%');
+    card.style.setProperty('--glare-y', py + '%');
+
+    // Hue rotation on the shine based on x position
+    if (shine) {
+      shine.style.filter = `hue-rotate(${(nx + 1) * 180}deg)`;
+    }
+  }
+
+  function onEnter() {
+    isHovering = true;
+    card.classList.remove('idle');
+  }
+
+  function onLeave() {
+    isHovering = false;
+    targetRX = 0;
+    targetRY = 0;
   }
 
   function animate() {
-    currentX = lerp(currentX, targetX, 0.07);
-    currentY = lerp(currentY, targetY, 0.07);
+    currentRX = lerp(currentRX, targetRX, LERP_SPD);
+    currentRY = lerp(currentRY, targetRY, LERP_SPD);
 
-    layers.forEach(layer => {
-      const depth  = parseFloat(layer.dataset.depth) || 0;
-      const tx = currentX * STRENGTH * depth;
-      const ty = currentY * STRENGTH * depth;
-      layer.style.transform = `translate(${tx}px, ${ty}px)`;
-    });
+    // Only apply when hovering or still interpolating back
+    const moving = Math.abs(currentRX) > 0.01 || Math.abs(currentRY) > 0.01;
+    if (isHovering || moving) {
+      card.style.transform =
+        `rotateX(${currentRX.toFixed(2)}deg) rotateY(${currentRY.toFixed(2)}deg)`;
+    } else if (!isHovering) {
+      card.classList.add('idle');
+    }
 
     rafId = requestAnimationFrame(animate);
   }
 
-  function onLeave() {
-    targetX = 0; targetY = 0;
-  }
+  card.addEventListener('mousemove',  onMouseMove);
+  card.addEventListener('mouseenter', onEnter);
+  card.addEventListener('mouseleave', onLeave);
 
-  wrapper.addEventListener('mousemove', onMouseMove);
-  wrapper.addEventListener('mouseleave', onLeave);
+  // Start idle float, then begin RAF
+  card.classList.add('idle');
   animate();
 
-  // Also init counters for hv-stat-n elements
-  document.querySelectorAll('.hv-stat-n[data-count]').forEach(el => {
-    const io = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        countUp(el);
-        io.unobserve(el);
-      }
-    }, { threshold: 0.5 });
-    io.observe(el);
-  });
-
+  // Pause when tab is hidden
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) cancelAnimationFrame(rafId);
     else animate();
+  });
+
+  // Counter animation for holo stat numbers
+  document.querySelectorAll('.hs-n[data-count]').forEach(el => {
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { countUp(el); obs.unobserve(el); }
+    }, { threshold: 0.5 });
+    obs.observe(el);
   });
 }
